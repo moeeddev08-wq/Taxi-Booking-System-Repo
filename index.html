@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizz Cars Godalming | Premium Taxi & Chauffeur Services Surrey</title>
+    <meta name="description"
+        content="Wizz Cars Godalming offers reliable, high-end private hire taxi services, airport transfers, corporate travel, and local runs in Godalming, Surrey. Book online now.">
+
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="Wizz Cars Godalming | Premium Taxi & Chauffeur Services">
+    <meta property="og:description"
+        content="Luxury airport transfers, executive corporate travel, and local town taxis in Godalming, Surrey. Fixed prices, 24/7 service.">
+    <meta property="og:url" content="https://wizzcarsgodalming.co.uk">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/hero-car.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+
+<body>
+
+    <!-- Sticky Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <a href="#" class="logo" id="header-logo">
+                <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                        class="logo-cars">Cars</span></span>
+                <span class="logo-sub">GODALMING</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link active">Home</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#fleet" class="nav-link">Our Fleet</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                    <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="tel:07833814223" class="phone-btn" id="header-phone-btn" title="Call Us">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>07833814223</span>
+                </a>
+                <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+                    target="_blank" rel="noopener" class="header-whatsapp-btn" id="header-whatsapp-btn"
+                    title="WhatsApp Chat">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="badge">Premium Private Hire</div>
+                    <h1 class="hero-title">Luxury Travel & Taxi Services in Godalming</h1>
+                    <p class="hero-subtitle">Experience first-class travel for local runs, corporate trips, and reliable
+                        airport transfers. Professional uniformed chauffeurs with transparent fixed pricing.</p>
+
+                    <div class="hero-features">
+                        <div class="hero-feature-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>24/7 Availability</span>
+                        </div>
+                        <div class="hero-feature-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Flight Tracking</span>
+                        </div>
+                        <div class="hero-feature-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Fixed Prices</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions-row">
+                        <a href="#booking-section" class="btn btn-primary">Book Online</a>
+                        <a href="#services" class="btn btn-secondary">Explore Services</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="glass-card hero-image-card">
+                        <img src="assets/hero-car.jpg" alt="Wizz Cars Executive Chauffeur Saloon" class="hero-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Booking Calculator Section -->
+        <section class="booking-section" id="booking-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Fare Calculator</div>
+                    <h2>Book Your Private Hire Journey</h2>
+                    <p>Enter your travel details below for an instant fare estimate and submit a booking request. No
+                        card required upfront.</p>
+                </div>
+
+                <div class="booking-grid">
+                    <!-- Calculator Form Card -->
+                    <div class="glass-card booking-card">
+                        <form id="booking-form">
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label for="pickup-address"><i class="fa-solid fa-location-dot"></i> Pickup
+                                        Address</label>
+                                    <input type="text" id="pickup-address"
+                                        placeholder="e.g., Godalming Station or post code" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label for="dropoff-address"><i class="fa-solid fa-location-crosshairs"></i>
+                                        Destination Address</label>
+                                    <input type="text" id="dropoff-address"
+                                        placeholder="e.g., Heathrow Airport Terminal 5 or post code" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row flex-row">
+                                <div class="form-group col-6">
+                                    <label for="service-type"><i class="fa-solid fa-route"></i> Journey Type</label>
+                                    <select id="service-type">
+                                        <option value="local">Local Town Run</option>
+                                        <option value="airport">Airport Transfer</option>
+                                        <option value="long-distance">Long Distance</option>
+                                        <option value="executive">Executive Chauffeur</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="vehicle-type"><i class="fa-solid fa-car"></i> Vehicle Class</label>
+                                    <select id="vehicle-type">
+                                        <option value="saloon">Standard Saloon</option>
+                                        <option value="executive">Executive Saloon</option>
+                                        <option value="mpv">Luxury MPV (Minivan)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row flex-row">
+                                <div class="form-group col-6">
+                                    <label for="booking-date"><i class="fa-solid fa-calendar-days"></i> Pickup
+                                        Date</label>
+                                    <input type="date" id="booking-date" required>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="booking-time"><i class="fa-solid fa-clock"></i> Pickup Time</label>
+                                    <input type="time" id="booking-time" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row flex-row">
+                                <div class="form-group col-6">
+                                    <label for="passenger-count"><i class="fa-solid fa-users"></i> Passengers</label>
+                                    <select id="passenger-count">
+                                        <option value="1">1 Passenger</option>
+                                        <option value="2">2 Passengers</option>
+                                        <option value="3">3 Passengers</option>
+                                        <option value="4">4 Passengers</option>
+                                        <option value="5">5 Passengers</option>
+                                        <option value="6">6 Passengers</option>
+                                        <option value="7">7 Passengers</option>
+                                        <option value="8">8 Passengers</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="luggage-count"><i class="fa-solid fa-suitcase"></i> Suitcases</label>
+                                    <select id="luggage-count">
+                                        <option value="0">No Luggage</option>
+                                        <option value="1">1 Luggage Bag</option>
+                                        <option value="2">2 Luggage Bags</option>
+                                        <option value="3">3 Luggage Bags</option>
+                                        <option value="4">4+ Luggage Bags</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-divider">Your Contact Info</div>
+
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label for="customer-name"><i class="fa-solid fa-user"></i> Full Name</label>
+                                    <input type="text" id="customer-name" placeholder="John Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row flex-row">
+                                <div class="form-group col-6">
+                                    <label for="customer-phone"><i class="fa-solid fa-phone"></i> Mobile Phone</label>
+                                    <input type="tel" id="customer-phone" placeholder="e.g., 07123 456789" required>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="customer-email"><i class="fa-solid fa-envelope"></i> Email
+                                        Address</label>
+                                    <input type="email" id="customer-email" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btn-submit-booking">
+                                Confirm & Request Booking
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Fare Display & Details Card -->
+                    <div class="fare-display-card glass-card">
+                        <div class="fare-header">
+                            <h3>Estimated Fare</h3>
+                            <div class="fare-price" id="fare-price">£0.00</div>
+                            <span class="fare-notes" id="fare-notes">*Please enter pickup and dropoff-address</span>
+                        </div>
+
+                        <div class="fare-details">
+                            <h4>Selected Route & Vehicle</h4>
+                            <ul class="summary-list">
+                                <li>
+                                    <span class="label">Vehicle Class:</span>
+                                    <span class="value" id="summary-vehicle">Standard Saloon</span>
+                                </li>
+                                <li>
+                                    <span class="label">Passenger Capacity:</span>
+                                    <span class="value" id="summary-passengers">Up to 4</span>
+                                </li>
+                                <li>
+                                    <span class="label">Luggage Capacity:</span>
+                                    <span class="value" id="summary-luggage">Up to 3 bags</span>
+                                </li>
+                                <li>
+                                    <span class="label">Distance Estimate:</span>
+                                    <span class="value" id="summary-distance">Calculated on submit</span>
+                                </li>
+                            </ul>
+
+                            <div class="popular-routes">
+                                <h4>Popular Fixed Rates (From Godalming)</h4>
+                                <div class="route-rate-item" data-destination="Heathrow">
+                                    <span class="route-name">Heathrow Airport</span>
+                                    <span class="route-price">From £85.00</span>
+                                </div>
+                                <div class="route-rate-item" data-destination="Gatwick">
+                                    <span class="route-name">Gatwick Airport</span>
+                                    <span class="route-price">From £85.00</span>
+                                </div>
+                                <div class="route-rate-item" data-destination="Luton">
+                                    <span class="route-name">Luton Airport</span>
+                                    <span class="route-price">From £170.00</span>
+                                </div>
+                                <div class="route-rate-item" data-destination="Wimbledon">
+                                    <span class="route-name">Wimbledon Stadium</span>
+                                    <span class="route-price">From £90.00</span>
+                                </div>
+                            </div>
+
+                            <div class="booking-guarantee">
+                                <i class="fa-solid fa-shield-halved"></i>
+                                <div>
+                                    <h5>No Upfront Card Payment</h5>
+                                    <p>Once you submit, our dispatch team will review availability and confirm your
+                                        final price via SMS/Email within 10 minutes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section" id="services">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Our Services</div>
+                    <h2>Elite Transportation Tailored For You</h2>
+                    <p>Wizz Cars Godalming delivers exceptional service across Surrey and beyond. Explore our
+                        specialisms.</p>
+                </div>
+
+                <div class="services-grid">
+                    <!-- Service 1 -->
+                    <div class="glass-card service-card">
+                        <div class="service-icon">
+                            <i class="fa-solid fa-plane-departure"></i>
+                        </div>
+                        <h3>Airport Transfers</h3>
+                        <p>Dignified, stress-free transfers to Heathrow, Gatwick, Luton, London City, and Stansted.
+                            Includes real-time flight tracking and optional meet-and-greet in the arrivals hall.</p>
+                        <a href="#booking-section" class="service-link">Book Airport Run <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="glass-card service-card">
+                        <div class="service-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <h3>Corporate & Executive</h3>
+                        <p>First-class travel for business professionals. Impeccably maintained executive vehicles
+                            equipped with climate control, leather upholstery, and quiet cabins for working on the go.
+                        </p>
+                        <a href="#booking-section" class="service-link">Open Account <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="glass-card service-card">
+                        <div class="service-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <h3>Local Runs & Town Travel</h3>
+                        <p>Prompt, reliable taxi service for local journeys in Godalming, Milford, Witley, Chiddingfold,
+                            and Guildford. Ideal for station runs, shopping trips, and doctor appointments.</p>
+                        <a href="#booking-section" class="service-link">Order Local Ride <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="glass-card service-card">
+                        <div class="service-icon">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                        </div>
+                        <h3>Events & Weddings</h3>
+                        <p>Arrive in style. We coordinate luxury group and individual travel for weddings, parties,
+                            Ascot races, Henley Regatta, and corporate dinners with bespoke itineraries.</p>
+                        <a href="#booking-section" class="service-link">Get a Quote <i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fleet Showcase Section -->
+        <section class="fleet-section" id="fleet">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Our Fleet</div>
+                    <h2>Travel in Premium Comfort</h2>
+                    <p>Choose the vehicle class that best suits your group size, comfort standards, and luggage
+                        requirements.</p>
+                </div>
+
+                <div class="fleet-tabs">
+                    <button class="tab-btn active" id="tab-btn-saloon" onclick="switchFleetTab('saloon')">Standard
+                        Saloon</button>
+                    <button class="tab-btn" id="tab-btn-executive" onclick="switchFleetTab('executive')">Executive
+                        Chauffeur</button>
+                    <button class="tab-btn" id="tab-btn-mpv" onclick="switchFleetTab('mpv')">Luxury MPV
+                        (Minivan)</button>
+                </div>
+
+                <div class="fleet-content-container">
+                    <!-- Saloon Card -->
+                    <div class="fleet-tab-content active" id="fleet-content-saloon">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/saloon.jpg" alt="Standard Saloon Vehicle" class="fleet-car-img">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Standard Saloon</h3>
+                                <p class="fleet-class-sub">Comfortable, economical daily travel.</p>
+                                <p class="fleet-desc">Perfect for everyday travel, local town runs, and budget-friendly
+                                    airport transfers. Features modern hybrid technology for a quiet, eco-friendly ride.
+                                </p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>4 Passengers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-suitcase"></i>
+                                        <span>3 Large Bags</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-snowflake"></i>
+                                        <span>Climate Control</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-leaf"></i>
+                                        <span>Eco-Hybrid Tech</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£3.00/mile</strong> (Minimum fare £10.00)</span>
+                                </div>
+
+                                <a href="#booking-section" class="btn btn-primary"
+                                    onclick="selectFleetInForm('saloon')">Select Vehicle Class</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Executive Card -->
+                    <div class="fleet-tab-content" id="fleet-content-executive">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/executive.jpg" alt="Executive Saloon Vehicle" class="fleet-car-img">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Executive Chauffeur</h3>
+                                <p class="fleet-class-sub">Luxurious styling, pristine executive cabins.</p>
+                                <p class="fleet-desc">Designed for business meetings, corporate transport, and ultimate
+                                    airport transfers. Typically features Mercedes S-Class, E-Class, or similar
+                                    high-caliber executive vehicles with leather upholstery, rear climate control, and
+                                    privacy glass.</p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>4 Passengers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-suitcase"></i>
+                                        <span>3 Large Bags</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-chair"></i>
+                                        <span>Full Nappa Leather</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <span>Onboard Wi-Fi / Charger</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£4.50/mile</strong> (Minimum fare £25.00)</span>
+                                </div>
+
+                                <a href="#booking-section" class="btn btn-primary"
+                                    onclick="selectFleetInForm('executive')">Select Vehicle Class</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MPV Card -->
+                    <div class="fleet-tab-content" id="fleet-content-mpv">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/mpv.jpg" alt="Luxury MPV Minivan" class="fleet-car-img">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Luxury MPV (Minivan)</h3>
+                                <p class="fleet-class-sub">Spacious group travel and heavy luggage capacity.</p>
+                                <p class="fleet-desc">Perfect for family trips, skiing holidays, golf group excursions,
+                                    and large corporate events. Offers luxury seating configurations for up to 8
+                                    passengers, dual sliding doors, and enormous trunk space.</p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>Up to 8 Passengers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-suitcase"></i>
+                                        <span>6+ Large Bags</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                        <span>Dual Power Doors</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-people-group"></i>
+                                        <span>Conference Seating</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£5.50/mile</strong> (Minimum fare £35.00)</span>
+                                </div>
+
+                                <a href="#booking-section" class="btn btn-primary"
+                                    onclick="selectFleetInForm('mpv')">Select Vehicle Class</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Plan Section -->
+        <section class="pricing-plan-section" id="pricing">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Fixed Rates</div>
+                    <h2>Our Pricing Plan</h2>
+                    <div class="pricing-decorative-line">
+                        <span class="line-dot"></span>
+                        <span class="line-circle"></span>
+                        <span class="line-dot"></span>
+                    </div>
+                    <p>Transparent, competitive fixed rates for airport transfers, station runs, and popular UK
+                        destinations. Click a route to pre-fill the booking calculator.</p>
+                </div>
+
+                <div class="pricing-table-wrap glass-card">
+                    <div class="pricing-grid-list">
+                        <div class="pricing-row" data-route="Heathrow">
+                            <span class="pricing-dest">Heathrow Airport</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £85</span>
+                        </div>
+                        <div class="pricing-row" data-route="Gatwick">
+                            <span class="pricing-dest">Gatwick Airport</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £85</span>
+                        </div>
+                        <div class="pricing-row" data-route="Luton">
+                            <span class="pricing-dest">Luton Airport</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £170</span>
+                        </div>
+                        <div class="pricing-row" data-route="Stansted">
+                            <span class="pricing-dest">Stansted Airport</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £190</span>
+                        </div>
+                        <div class="pricing-row" data-route="London City">
+                            <span class="pricing-dest">London City Airport</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £150</span>
+                        </div>
+                        <div class="pricing-row" data-route="Kings Cross">
+                            <span class="pricing-dest">St Pancras / Kings Cross Station</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £140</span>
+                        </div>
+                        <div class="pricing-row" data-route="South West London">
+                            <span class="pricing-dest">South West London</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £120</span>
+                        </div>
+                        <div class="pricing-row" data-route="Oval">
+                            <span class="pricing-dest">Lords / Oval Cricket Ground</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £120</span>
+                        </div>
+                        <div class="pricing-row" data-route="Wimbledon">
+                            <span class="pricing-dest">Wimbledon Stadium</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £90</span>
+                        </div>
+                        <div class="pricing-row" data-route="Central London">
+                            <span class="pricing-dest">Central London</span>
+                            <span class="pricing-leader"></span>
+                            <span class="pricing-badge">From £130</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust / Benefits Section -->
+        <section class="benefits-section" id="benefits">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-box">
+                        <div class="benefit-icon"><i class="fa-solid fa-shield-check"></i></div>
+                        <h3>Licensed & Insured</h3>
+                        <p>All drivers are strictly DBS-checked, fully licensed by the local council, and trained in
+                            passenger safety.</p>
+                    </div>
+                    <div class="benefit-box">
+                        <div class="benefit-icon"><i class="fa-solid fa-headset"></i></div>
+                        <h3>24/7 Service Available</h3>
+                        <p>We work around the clock. Dispatchers and emergency support lines are open 24 hours a day,
+                            365 days a year.</p>
+                    </div>
+                    <div class="benefit-box">
+                        <div class="benefit-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <h3>No Surge Pricing</h3>
+                        <p>Unlike rideshare apps, our price is fixed upon confirmation. Traffic delays or flight delays
+                            won't cost you more.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Customer Reviews</div>
+                    <h2>Trusted by Locals & Business Travelers</h2>
+                    <p>Read what our regular clients in Godalming, Milford, and surrounding areas say about Wizz Cars.
+                    </p>
+                </div>
+
+                <div class="testimonial-slider-container">
+                    <div class="testimonial-wrapper">
+                        <!-- Slide 1 -->
+                        <div class="testimonial-slide active">
+                            <div class="testimonial-stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Wizz Cars has been my go-to private hire service for business
+                                trips to Heathrow. They are always 5 minutes early, the cars are immaculately clean, and
+                                the booking request process is super easy. Highly recommend their executive service."
+                            </p>
+                            <h4 class="testimonial-author">Sarah Jenkins</h4>
+                            <span class="testimonial-location">Godalming Town</span>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Fantastic airport pickup service! Our flight back to Gatwick
+                                was delayed by 3 hours, but our driver was waiting right in arrivals with a sign. The
+                                flight tracking worked perfectly. Stress-free and polite driver."</p>
+                            <h4 class="testimonial-author">Dr. David Miller</h4>
+                            <span class="testimonial-location">Milford, Surrey</span>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Booked an MPV with Wizz Cars for a family trip to London. With
+                                6 passengers and tons of suitcases, they accommodated us perfectly in a beautiful
+                                V-Class minivan. Transparent pricing and cheaper than taking two normal cabs!"</p>
+                            <h4 class="testimonial-author">The Reynolds Family</h4>
+                            <span class="testimonial-location">Chiddingfold</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-controls">
+                        <button class="slider-arrow prev" id="slider-prev"><i
+                                class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-dots" id="slider-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <button class="slider-arrow next" id="slider-next"><i
+                                class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Google Map and Contact Details Section -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Find Us</div>
+                    <h2>Our Service Area & Contact</h2>
+                    <p>Based in Godalming, we cover all local villages and provide direct transport to major UK airports
+                        and cities.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Map Wrapper -->
+                    <div class="map-container-wrap glass-card">
+
+                        <!-- Embedded Google Map -->
+                        <iframe id="service-map"
+                            src="https://maps.google.com/maps?q=Wizz+Cars+Godalming,+Farncombe+Street,+Godalming+GU7+3BA&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                            style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <!-- Contact details & quick message form -->
+                    <div class="contact-details-wrap glass-card">
+                        <h3>Get in Touch</h3>
+                        <p class="contact-desc">For general inquiries, corporate accounts, or customized long-distance
+                            quotes, call or email us directly, or drop us a quick note below.</p>
+
+                        <div class="contact-info-list">
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                                <div class="info-content">
+                                    <span>Phone Number</span>
+                                    <a href="tel:07833814223">07833814223</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                                <div class="info-content">
+                                    <span>Email Address</span>
+                                    <a
+                                        href="mailto:bookings@wizzcarsgodalming.co.uk">bookings@wizzcarsgodalming.co.uk</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                                <div class="info-content">
+                                    <span>Office Hours</span>
+                                    <span>24/7 Telephone Dispatch Available</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Inquiry Form -->
+                        <form id="inquiry-form" class="inquiry-form">
+                            <h4>Send a Message</h4>
+                            <div class="form-row flex-row">
+                                <input type="text" placeholder="Your Name" required>
+                                <input type="email" placeholder="Email Address" required>
+                            </div>
+                            <textarea placeholder="How can we help you?" rows="3" required></textarea>
+                            <button type="submit" class="btn btn-secondary btn-block">Send Inquiry</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                            class="logo-cars">Cars</span></span>
+                    <span class="logo-sub">GODALMING</span>
+                </a>
+                <p>Providing premium taxi, chauffeur, and airport transfer services throughout Godalming and Surrey
+                    villages. Reliable, clean, and professional 24/7 travel.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#services">Our Services</a></li>
+                    <li><a href="#fleet">Our Fleet</a></li>
+                    <li><a href="#pricing">Pricing Plan</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-coverage">
+                <h4>Coverage Areas</h4>
+                <ul>
+                    <li>Godalming & Town Centre</li>
+                    <li>Milford, Witley & Hambledon</li>
+                    <li>Chiddingfold & Haslemere</li>
+                    <li>Bramley, Wonersh & Shamley Green</li>
+                    <li>Guildford & surrounding villages</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Wizz Cars Godalming. All Rights Reserved. Private Hire Operators Licensed in Surrey.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Confirmation Modal -->
+    <div class="modal-backdrop" id="booking-modal">
+        <div class="modal-card glass-card">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <div class="modal-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h3>Booking Request Received!</h3>
+            <p>Thank you for choosing Wizz Cars Godalming. We have received your request and will review availability
+                immediately.</p>
+
+            <div class="modal-summary">
+                <h4>Trip Summary</h4>
+                <div class="summary-row">
+                    <span>Booking Code:</span>
+                    <strong id="modal-booking-code">WC-89721</strong>
+                </div>
+                <div class="summary-row">
+                    <span>From:</span>
+                    <span id="modal-pickup">-</span>
+                </div>
+                <div class="summary-row">
+                    <span>To:</span>
+                    <span id="modal-dropoff">-</span>
+                </div>
+                <div class="summary-row">
+                    <span>Date / Time:</span>
+                    <span id="modal-datetime">-</span>
+                </div>
+                <div class="summary-row">
+                    <span>Vehicle:</span>
+                    <span id="modal-vehicle">-</span>
+                </div>
+                <div class="summary-row">
+                    <span>Est. Fare:</span>
+                    <strong class="text-gold" id="modal-fare">-</strong>
+                </div>
+            </div>
+
+            <p class="modal-next-steps">We will send an SMS and email confirmation with your driver details and final
+                pricing shortly. If you need to make changes, please call us quoting your code.</p>
+            <button class="btn btn-primary btn-block" id="modal-done-btn">Done</button>
+        </div>
+    </div>
+
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact">
+        <a href="tel:07833814223" class="float-btn float-phone" aria-label="Call Us">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+        <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js?v=2"></script>
+</body>
+
+</html>

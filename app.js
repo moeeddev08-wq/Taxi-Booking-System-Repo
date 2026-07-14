@@ -444,7 +444,7 @@ function initTestimonialSlider() {
     startAutoSlide();
 }
 
-// 6. Quick Inquiry Contact Form Submission Mock
+/// 6. Quick Inquiry Contact Form Submission
 function initContactForm() {
     const form = document.getElementById('inquiry-form');
     if (!form) return;
@@ -452,22 +452,36 @@ function initContactForm() {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Mocking submission success with a simple elegant alert
         const originalBtnText = form.querySelector('button').textContent;
         const btn = form.querySelector('button');
+        const nameInput = form.querySelector('input[type="text"]');
+        const emailInput = form.querySelector('input[type="email"]');
+        const messageInput = form.querySelector('textarea');
 
         btn.textContent = 'Sending...';
         btn.disabled = true;
 
+        fetch(GOOGLE_SHEET_ENDPOINT, {
+            method: "POST",
+            body: JSON.stringify({
+                type: 'inquiry',
+                name: nameInput.value,
+                email: emailInput.value,
+                message: messageInput.value
+            })
+        }).catch((err) => {
+            console.error('Inquiry submission failed:', err);
+        });
+
         setTimeout(() => {
             btn.textContent = 'Message Sent Successfully!';
-            btn.style.background = '#28a745'; // green success
+            btn.style.background = '#28a745';
             btn.style.color = '#fff';
 
             setTimeout(() => {
                 form.reset();
                 btn.textContent = originalBtnText;
-                btn.style.background = ''; // restore CSS
+                btn.style.background = '';
                 btn.style.color = '';
                 btn.disabled = false;
             }, 3000);

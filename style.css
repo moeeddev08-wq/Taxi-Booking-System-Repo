@@ -1042,6 +1042,9 @@ iframe {
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
     font-size: 1.05rem;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+
 }
 
 .info-content a:hover {

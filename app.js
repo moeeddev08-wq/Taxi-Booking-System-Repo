@@ -1,4 +1,6 @@
 // Wizz Cars Godalming - Interactive Client Script
+const GOOGLE_SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxO_pqU4cEGr4XskzJyrQBlnGe8OaudtPqZPd0OpAmwGqqw6v0sHYheqKVfvD5eJWTA/exec";
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollHeader();
@@ -313,12 +315,19 @@ function initFareEstimator() {
     bookingForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        // Honeypot spam check (silently drop bot submissions)
+        const honeypot = document.getElementById('website-url');
+        if (honeypot && honeypot.value !== '') {
+            return;
+        }
+
         // Final validations
         if (!pickupInput.value || !dropoffInput.value) return;
 
         // Generate dynamic mock Booking Code
         const randNum = Math.floor(10000 + Math.random() * 90000);
-        document.getElementById('modal-booking-code').textContent = `WC-${randNum}`;
+        const bookingCode = `WC-${randNum}`;
+        document.getElementById('modal-booking-code').textContent = bookingCode;
 
         // Populate Modal Summary Info
         document.getElementById('modal-pickup').textContent = pickupInput.value;
@@ -332,6 +341,25 @@ function initFareEstimator() {
         document.getElementById('modal-vehicle').textContent = vehicleSelector.options[vehicleSelector.selectedIndex].text;
 
         document.getElementById('modal-fare').textContent = farePrice.textContent;
+
+        // Send booking data to Google Sheet + Email notification
+        const nameField = document.getElementById('customer-name');
+        const phoneField = document.getElementById('customer-phone');
+
+        fetch(GOOGLE_SHEET_ENDPOINT, {
+            method: "POST",
+            body: JSON.stringify({
+                name: nameField ? nameField.value : '',
+                phone: phoneField ? phoneField.value : '',
+                pickup: pickupInput.value,
+                dropoff: dropoffInput.value,
+                vehicle: vehicleSelector.options[vehicleSelector.selectedIndex].text,
+                fare: farePrice.textContent,
+                bookingCode: bookingCode
+            })
+        }).catch((err) => {
+            console.error('Booking submission failed to reach Google Sheet:', err);
+        });
 
         // Open Modal
         bookingModal.classList.add('active');

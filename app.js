@@ -98,13 +98,32 @@ function switchFleetTab(vehicleClass) {
 }
 
 // Quick action: Select vehicle from Fleet Showcase and pre-fill form
+// Quick action: Select vehicle from Fleet Showcase and pre-fill form
 function selectFleetInForm(vehicleClass) {
     const vehicleSelector = document.getElementById('vehicle-type');
+    const passengerSelector = document.getElementById('passenger-count');
+    const luggageSelector = document.getElementById('luggage-count');
+
     vehicleSelector.value = vehicleClass;
+
+    // Match passenger/luggage defaults to the fleet card details
+    const defaults = {
+        saloon: { passengers: '4', luggage: '3' },
+        executive: { passengers: '4', luggage: '3' },
+        mpv: { passengers: '8', luggage: '4' }
+    };
+
+    const setValues = defaults[vehicleClass];
+    if (setValues) {
+        passengerSelector.value = setValues.passengers;
+        luggageSelector.value = setValues.luggage;
+    }
 
     // Trigger change event to update the booking summary
     const event = new Event('change');
     vehicleSelector.dispatchEvent(event);
+    passengerSelector.dispatchEvent(event);
+    luggageSelector.dispatchEvent(event);
 
     // Smooth scroll to form
     const bookingSection = document.getElementById('booking-section');

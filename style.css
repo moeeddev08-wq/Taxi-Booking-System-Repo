@@ -1771,19 +1771,18 @@ iframe {
     }
 }
 
-/* ===== Top Announcement Popup ===== */
 .announce-popup {
     position: fixed;
     top: 0;
     left: 50%;
     transform: translate(-50%, -150%);
-    width: 90%;
-    max-width: 480px;
+    width: 94%;
+    max-width: 640px;
     background: var(--bg-darkest);
     border: 1px solid var(--gold);
     border-top: none;
-    border-radius: 0 0 16px 16px;
-    padding: 28px 32px 24px;
+    border-radius: 0 0 20px 20px;
+    padding: 36px 40px 32px;
     z-index: 1100;
     text-align: center;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -1796,14 +1795,15 @@ iframe {
 
 .announce-popup h3 {
     color: var(--gold);
-    font-size: 1.3rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    margin-bottom: 14px;
+    line-height: 1.3;
 }
 
 .announce-popup p {
     color: var(--text-gray);
-    font-size: 0.9rem;
-    margin-bottom: 18px;
+    font-size: 1rem;
+    margin-bottom: 22px;
 }
 
 .announce-close {

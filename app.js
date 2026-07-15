@@ -1,6 +1,14 @@
 // Wizz Cars Godalming - Interactive Client Script
 const GOOGLE_SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxO_pqU4cEGr4XskzJyrQBlnGe8OaudtPqZPd0OpAmwGqqw6v0sHYheqKVfvD5eJWTA/exec";
 
+function sanitizeForSheet(value) {
+    if (typeof value !== 'string') return value;
+    const trimmed = value.trim();
+    if (/^[=+\-@]/.test(trimmed)) {
+        return "'" + trimmed;
+    }
+    return value;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollHeader();
@@ -372,10 +380,10 @@ function initFareEstimator() {
         fetch(GOOGLE_SHEET_ENDPOINT, {
             method: "POST",
             body: JSON.stringify({
-                name: nameField ? nameField.value : '',
-                phone: phoneField ? phoneField.value : '',
-                pickup: pickupInput.value,
-                dropoff: dropoffInput.value,
+                name: sanitizeForSheet(nameField ? nameField.value : ''),
+                phone: sanitizeForSheet(phoneField ? phoneField.value : ''),
+                pickup: sanitizeForSheet(pickupInput.value),
+                dropoff: sanitizeForSheet(dropoffInput.value),
                 vehicle: vehicleSelector.options[vehicleSelector.selectedIndex].text,
                 fare: farePrice.textContent,
                 bookingCode: bookingCode
@@ -488,9 +496,9 @@ function initContactForm() {
             method: "POST",
             body: JSON.stringify({
                 type: 'inquiry',
-                name: nameInput.value,
-                email: emailInput.value,
-                message: messageInput.value
+                name: sanitizeForSheet(nameInput.value),
+                email: sanitizeForSheet(emailInput.value),
+                message: sanitizeForSheet(messageInput.value)
             })
         }).catch((err) => {
             console.error('Inquiry submission failed:', err);

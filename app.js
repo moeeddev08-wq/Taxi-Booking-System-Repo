@@ -8,8 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
     initFareEstimator();
     initTestimonialSlider();
     initContactForm();
+    initAnnouncePopup();
 });
 
+// 7. Top Announcement Popup (shows once per browser session)
+function initAnnouncePopup() {
+    const popup = document.getElementById('announce-popup');
+    const closeBtn = document.getElementById('announce-close');
+    const ctaBtn = document.getElementById('announce-btn');
+    if (!popup) return;
+
+    // Only show once per browser session (not on every single refresh)
+    if (sessionStorage.getItem('announceDismissed') === 'true') return;
+
+    setTimeout(() => {
+        popup.classList.add('show');
+    }, 1000);
+
+    const dismiss = () => {
+        popup.classList.remove('show');
+        sessionStorage.setItem('announceDismissed', 'true');
+    };
+
+    closeBtn.addEventListener('click', dismiss);
+    ctaBtn.addEventListener('click', dismiss);
+}
 // 1. Sticky Navigation Scroll Effect
 function initScrollHeader() {
     const header = document.getElementById('site-header');

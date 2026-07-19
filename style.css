@@ -537,9 +537,47 @@ body.light-mode .theme-toggle-btn .icon-moon {
 
 .booking-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 40px;
-    margin-top: 40px;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.booking-info-col {
+    position: sticky;
+    top: 110px;
+}
+
+.booking-info-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.booking-info-desc {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+    line-height: 1.7;
+}
+
+.booking-info-image-card {
+    padding: 12px;
+    border-color: var(--border-color);
+}
+
+.booking-info-img {
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 991px) {
+    .booking-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-info-col {
+        position: static;
+    }
 }
 
 .booking-card {

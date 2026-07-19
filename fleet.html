@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Fleet | Wizz Cars Godalming</title>
+    <meta name="description"
+        content="Explore Wizz Cars Godalming's fleet: Standard Saloon, Executive Chauffeur, and Luxury MPV — compare capacity, features, and pricing.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+
+<body>
+
+    <!-- Top Announcement Popup -->
+    <div class="announce-backdrop" id="announce-backdrop"></div>
+    <div class="announce-popup" id="announce-popup">
+        <button class="announce-close" id="announce-close" aria-label="Close">&times;</button>
+        <h3>Book Your Godalming Airport Taxi</h3>
+        <p>Fast, reliable transfers to Heathrow, Gatwick &amp; all major UK airports. Professional drivers, on-time
+            pickups every time.</p>
+        <a href="tel:07833814223" class="announce-btn" id="announce-btn">Instant Contact</a>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" id="header-logo">
+                <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                        class="logo-cars">Cars</span></span>
+                <span class="logo-sub">GODALMING</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="fleet.html" class="nav-link active">Our Fleet</a></li>
+                    <li><a href="booking.html" class="nav-link">Booking</a></li>
+                    <li><a href="index.html#testimonials" class="nav-link">Reviews</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+
+                <a href="tel:07833814223" class="phone-btn" id="header-phone-btn" title="Call Us">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>07833814223</span>
+                </a>
+                <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+                    target="_blank" rel="noopener" class="header-whatsapp-btn" id="header-whatsapp-btn"
+                    title="WhatsApp Chat">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Fleet Showcase Section -->
+        <section class="fleet-section" id="fleet" style="padding-top: 180px;">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Our Fleet</div>
+                    <h2>Travel in Premium Comfort</h2>
+                    <p>Choose the vehicle class that best suits your group size, comfort standards, and luggage
+                        requirements.</p>
+                </div>
+
+                <div class="fleet-tabs">
+                    <button class="tab-btn active" id="tab-btn-saloon" onclick="switchFleetTab('saloon')">Standard
+                        Saloon</button>
+                    <button class="tab-btn" id="tab-btn-executive" onclick="switchFleetTab('executive')">Executive
+                        Chauffeur</button>
+                    <button class="tab-btn" id="tab-btn-mpv" onclick="switchFleetTab('mpv')">Luxury MPV
+                        (Minivan)</button>
+                </div>
+
+                <div class="fleet-content-container">
+                    <!-- Saloon Card -->
+                    <div class="fleet-tab-content active" id="fleet-content-saloon">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/saloon.webp" alt="Standard Saloon Vehicle" class="fleet-car-img"
+                                    width="800" height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Standard Saloon</h3>
+                                <p class="fleet-class-sub">Comfortable, economical daily travel.</p>
+                                <p class="fleet-desc">Perfect for everyday travel, local town runs, and
+                                    budget-friendly airport transfers. Features modern hybrid technology for a quiet,
+                                    eco-friendly ride.</p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>4 Passengers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-suitcase"></i>
+                                        <span>3 Large Bags</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-snowflake"></i>
+                                        <span>Climate Control</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-leaf"></i>
+                                        <span>Eco-Hybrid Tech</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£3.00/mile</strong> (Minimum fare £10.00)</span>
+                                </div>
+
+                                <a href="booking.html?vehicle=saloon" class="btn btn-primary">Select Vehicle
+                                    Class</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Executive Card -->
+                    <div class="fleet-tab-content" id="fleet-content-executive">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/executive.webp" alt="Executive Saloon Vehicle" class="fleet-car-img"
+                                    width="800" height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Executive Chauffeur</h3>
+                                <p class="fleet-class-sub">Luxurious styling, pristine executive cabins.</p>
+                                <p class="fleet-desc">Designed for business meetings, corporate transport, and
+                                    ultimate airport transfers. Typically features Mercedes S-Class, E-Class, or
+                                    similar high-caliber executive vehicles with leather upholstery, rear climate
+                                    control, and privacy glass.</p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>4 Passengers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-suitcase"></i>
+                                        <span>3 Large Bags</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-chair"></i>
+                                        <span>Full Nappa Leather</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <span>Onboard Wi-Fi / Charger</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£4.50/mile</strong> (Minimum fare £25.00)</span>
+                                </div>
+
+                                <a href="booking.html?vehicle=executive" class="btn btn-primary">Select Vehicle
+                                    Class</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MPV Card -->
+                    <div class="fleet-tab-content" id="fleet-content-mpv">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/mpv.webp" alt="Luxury MPV Minivan" class="fleet-car-img" width="800"
+                                    height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Luxury MPV (Minivan)</h3>
+                                <p class="fleet-class-sub">Spacious group travel and heavy luggage capacity.</p>
+                                <p class="fleet-desc">Perfect for family trips, skiing holidays, golf group
+                                    excursions, and large corporate events. Offers luxury seating configurations for
+                                    up to 8 passengers, dual sliding doors, and enormous trunk space.</p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>Up to 8 Passengers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-suitcase"></i>
+                                        <span>6+ Large Bags</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                        <span>Dual Power Doors</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-people-group"></i>
+                                        <span>Conference Seating</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£5.50/mile</strong> (Minimum fare £35.00)</span>
+                                </div>
+
+                                <a href="booking.html?vehicle=mpv" class="btn btn-primary">Select Vehicle Class</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                            class="logo-cars">Cars</span></span>
+                    <span class="logo-sub">GODALMING</span>
+                </a>
+                <p>Providing premium taxi, chauffeur, and airport transfer services throughout Godalming and Surrey
+                    villages. Reliable, clean, and professional 24/7 travel.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="booking.html">Booking & Pricing</a></li>
+                    <li><a href="index.html#testimonials">Reviews</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-coverage">
+                <h4>Coverage Areas</h4>
+                <ul>
+                    <li>Godalming & Town Centre</li>
+                    <li>Milford, Witley & Hambledon</li>
+                    <li>Chiddingfold & Haslemere</li>
+                    <li>Bramley, Wonersh & Shamley Green</li>
+                    <li>Guildford & surrounding villages</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Wizz Cars Godalming. All Rights Reserved. Private Hire Operators Licensed in Surrey.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact">
+        <a href="tel:07833814223" class="float-btn float-phone" aria-label="Call Us">
+            <i class="fa-solid fa-phone"></i>
+            <span class="float-label">Call Us Now</span>
+        </a>
+        <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="float-label">Let's Chat</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js?v=6"></script>
+</body>
+
+</html>

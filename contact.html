@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Wizz Cars Godalming</title>
+    <meta name="description"
+        content="Get in touch with Wizz Cars Godalming for bookings, corporate accounts, or general inquiries. Based in Godalming, Surrey — 24/7 telephone dispatch.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+
+<body>
+
+    <!-- Top Announcement Popup -->
+    <div class="announce-backdrop" id="announce-backdrop"></div>
+    <div class="announce-popup" id="announce-popup">
+        <button class="announce-close" id="announce-close" aria-label="Close">&times;</button>
+        <h3>Book Your Godalming Airport Taxi</h3>
+        <p>Fast, reliable transfers to Heathrow, Gatwick &amp; all major UK airports. Professional drivers, on-time
+            pickups every time.</p>
+        <a href="tel:07833814223" class="announce-btn" id="announce-btn">Instant Contact</a>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" id="header-logo">
+                <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                        class="logo-cars">Cars</span></span>
+                <span class="logo-sub">GODALMING</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="fleet.html" class="nav-link">Our Fleet</a></li>
+                    <li><a href="booking.html" class="nav-link">Booking</a></li>
+                    <li><a href="index.html#testimonials" class="nav-link">Reviews</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+
+                <a href="tel:07833814223" class="phone-btn" id="header-phone-btn" title="Call Us">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>07833814223</span>
+                </a>
+                <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+                    target="_blank" rel="noopener" class="header-whatsapp-btn" id="header-whatsapp-btn"
+                    title="WhatsApp Chat">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Interactive Google Map and Contact Details Section -->
+        <section class="contact-section" id="contact" style="padding-top: 180px;">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Find Us</div>
+                    <h2>Our Service Area & Contact</h2>
+                    <p>Based in Godalming, we cover all local villages and provide direct transport to major UK
+                        airports and cities.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Map Wrapper -->
+                    <div class="map-container-wrap glass-card">
+                        <iframe id="service-map"
+                            src="https://maps.google.com/maps?q=Wizz+Cars+Godalming,+Farncombe+Street,+Godalming+GU7+3BA&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                            style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <!-- Contact details & quick message form -->
+                    <div class="contact-details-wrap glass-card">
+                        <h3>Get in Touch</h3>
+                        <p class="contact-desc">For general inquiries, corporate accounts, or customized
+                            long-distance quotes, call or email us directly, or drop us a quick note below.</p>
+
+                        <div class="contact-info-list">
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                                <div class="info-content">
+                                    <span>Phone Number</span>
+                                    <a href="tel:07833814223">07833814223</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                                <div class="info-content">
+                                    <span>Email Address</span>
+                                    <a href="mailto:wizzcarsgodalming@gmail.com">wizzcarsgodalming@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                                <div class="info-content">
+                                    <span>Office Hours</span>
+                                    <span>24/7 Telephone Dispatch Available</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Inquiry Form -->
+                        <form id="inquiry-form" class="inquiry-form">
+                            <h4>Send a Message</h4>
+                            <input type="text" id="inquiry-website" name="inquiry-website"
+                                style="position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+                            <div class="form-row flex-row">
+                                <input type="text" placeholder="Your Name" required>
+                                <input type="email" placeholder="Email Address" required>
+                            </div>
+                            <textarea placeholder="How can we help you?" rows="3" required></textarea>
+                            <button type="submit" class="btn btn-secondary btn-block">Send Inquiry</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                            class="logo-cars">Cars</span></span>
+                    <span class="logo-sub">GODALMING</span>
+                </a>
+                <p>Providing premium taxi, chauffeur, and airport transfer services throughout Godalming and Surrey
+                    villages. Reliable, clean, and professional 24/7 travel.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="booking.html">Booking & Pricing</a></li>
+                    <li><a href="index.html#testimonials">Reviews</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-coverage">
+                <h4>Coverage Areas</h4>
+                <ul>
+                    <li>Godalming & Town Centre</li>
+                    <li>Milford, Witley & Hambledon</li>
+                    <li>Chiddingfold & Haslemere</li>
+                    <li>Bramley, Wonersh & Shamley Green</li>
+                    <li>Guildford & surrounding villages</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Wizz Cars Godalming. All Rights Reserved. Private Hire Operators Licensed in Surrey.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact">
+        <a href="tel:07833814223" class="float-btn float-phone" aria-label="Call Us">
+            <i class="fa-solid fa-phone"></i>
+            <span class="float-label">Call Us Now</span>
+        </a>
+        <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="float-label">Let's Chat</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js?v=6"></script>
+</body>
+
+</html>

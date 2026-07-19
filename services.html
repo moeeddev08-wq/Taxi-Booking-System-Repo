@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Wizz Cars Godalming</title>
+    <meta name="description"
+        content="Explore Wizz Cars Godalming's services: airport transfers, corporate & executive travel, local runs, and events & weddings across Surrey.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+
+<body>
+
+    <!-- Top Announcement Popup -->
+    <div class="announce-backdrop" id="announce-backdrop"></div>
+    <div class="announce-popup" id="announce-popup">
+        <button class="announce-close" id="announce-close" aria-label="Close">&times;</button>
+        <h3>Book Your Godalming Airport Taxi</h3>
+        <p>Fast, reliable transfers to Heathrow, Gatwick &amp; all major UK airports. Professional drivers, on-time
+            pickups every time.</p>
+        <a href="tel:07833814223" class="announce-btn" id="announce-btn">Instant Contact</a>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" id="header-logo">
+                <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                        class="logo-cars">Cars</span></span>
+                <span class="logo-sub">GODALMING</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link active">Services</a></li>
+                    <li><a href="fleet.html" class="nav-link">Our Fleet</a></li>
+                    <li><a href="booking.html" class="nav-link">Booking</a></li>
+                    <li><a href="index.html#testimonials" class="nav-link">Reviews</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+
+                <a href="tel:07833814223" class="phone-btn" id="header-phone-btn" title="Call Us">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>07833814223</span>
+                </a>
+                <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+                    target="_blank" rel="noopener" class="header-whatsapp-btn" id="header-whatsapp-btn"
+                    title="WhatsApp Chat">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="fleet-section" id="services-page-header" style="padding-top: 180px;">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Our Services</div>
+                    <h2>Elite Transportation Tailored For You</h2>
+                    <p>Select a service below to see full details, then book instantly with pre-filled journey info.</p>
+                </div>
+
+                <!-- Service Tabs -->
+                <div class="fleet-tabs" id="service-tabs">
+                    <button class="tab-btn active" id="tab-btn-airport" onclick="switchServiceTab('airport')">
+                        <i class="fa-solid fa-plane-departure"></i> Airport Transfers
+                    </button>
+                    <button class="tab-btn" id="tab-btn-corporate" onclick="switchServiceTab('corporate')">
+                        <i class="fa-solid fa-briefcase"></i> Corporate & Executive
+                    </button>
+                    <button class="tab-btn" id="tab-btn-local" onclick="switchServiceTab('local')">
+                        <i class="fa-solid fa-map-location-dot"></i> Local Runs
+                    </button>
+                    <button class="tab-btn" id="tab-btn-events" onclick="switchServiceTab('events')">
+                        <i class="fa-solid fa-champagne-glasses"></i> Events & Weddings
+                    </button>
+                </div>
+
+                <div class="fleet-content-container">
+                    <!-- Airport Transfers -->
+                    <div class="fleet-tab-content active" id="service-content-airport">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/hero-car.webp" alt="Airport Transfer Service" class="fleet-car-img"
+                                    width="800" height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Airport Transfers</h3>
+                                <p class="fleet-class-sub">Stress-free transfers to every major UK airport.</p>
+                                <p class="fleet-desc">
+                                    Whether you're catching an early morning flight or arriving late at night, our
+                                    airport transfer service is built around your flight schedule, not the other way
+                                    around. We cover Heathrow, Gatwick, Luton, Stansted, and London City, with drivers
+                                    who track your flight in real time — so if you're delayed, we adjust the pickup
+                                    automatically, no extra charge.
+                                </p>
+                                <p class="fleet-desc">
+                                    Every journey includes a clean, comfortable vehicle, a professional uniformed
+                                    driver, and the option of meet-and-greet service in the arrivals hall for an extra
+                                    personal touch. Fixed pricing means no surprise fares, even in heavy traffic.
+                                </p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-plane-arrival"></i>
+                                        <span>Live Flight Tracking</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-user-tie"></i>
+                                        <span>Meet & Greet Option</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>24/7 Availability</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span>Fixed Fare Guarantee</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Fixed rates from <strong>£85</strong> (Heathrow & Gatwick)</span>
+                                </div>
+
+                                <a href="booking.html?service=airport" class="btn btn-primary">Book This
+                                    Service</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Corporate & Executive -->
+                    <div class="fleet-tab-content" id="service-content-corporate">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/executive.webp" alt="Corporate Executive Travel" class="fleet-car-img"
+                                    width="800" height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Corporate & Executive</h3>
+                                <p class="fleet-class-sub">First-class travel built for business.</p>
+                                <p class="fleet-desc">
+                                    Designed for professionals who need to arrive composed and on time, every trip.
+                                    Our executive vehicles come with climate control, leather upholstery, and quiet
+                                    cabins so you can prep for a meeting or take a call in comfort. Drivers are
+                                    punctual, discreet, and dressed to represent your business as well as ours.
+                                </p>
+                                <p class="fleet-desc">
+                                    Ideal for client pickups, airport runs for visiting executives, or recurring
+                                    office-to-office travel. We also support corporate accounts for businesses that
+                                    need regular, invoiced private hire — ask us about setting one up.
+                                </p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <span>Onboard Wi-Fi / Charger</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-user-secret"></i>
+                                        <span>Discreet, Professional Drivers</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span>Corporate Accounts Available</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-chair"></i>
+                                        <span>Premium Leather Cabins</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£4.50/mile</strong> (Minimum fare £25.00)</span>
+                                </div>
+
+                                <a href="booking.html?service=executive" class="btn btn-primary">Book This
+                                    Service</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Local Runs -->
+                    <div class="fleet-tab-content" id="service-content-local">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/saloon.webp" alt="Local Taxi Service" class="fleet-car-img" width="800"
+                                    height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Local Runs & Town Travel</h3>
+                                <p class="fleet-class-sub">Reliable everyday journeys, close to home.</p>
+                                <p class="fleet-desc">
+                                    For the trips that make up daily life — station runs, shopping trips, doctor
+                                    appointments, or a night out — we offer prompt, friendly local taxi service across
+                                    Godalming, Milford, Witley, Chiddingfold, and Guildford. No need to book far in
+                                    advance for most local journeys; call or book online and we'll have a car to you
+                                    quickly.
+                                </p>
+                                <p class="fleet-desc">
+                                    Regular customers can also set up standing bookings (e.g. weekly appointments or
+                                    school runs) — just mention it when you call.
+                                </p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        <span>Fast Local Response</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-map"></i>
+                                        <span>Surrey Village Coverage</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                        <span>Standing Bookings Available</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                        <span>Budget-Friendly Rates</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Rates from <strong>£3.00/mile</strong> (Minimum fare £10.00)</span>
+                                </div>
+
+                                <a href="booking.html?service=local" class="btn btn-primary">Book This Service</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events & Weddings -->
+                    <div class="fleet-tab-content" id="service-content-events">
+                        <div class="fleet-showcase-grid">
+                            <div class="fleet-image-wrap">
+                                <img src="assets/mpv.webp" alt="Events and Weddings Travel" class="fleet-car-img"
+                                    width="800" height="597">
+                            </div>
+                            <div class="fleet-details-wrap">
+                                <h3>Events & Weddings</h3>
+                                <p class="fleet-class-sub">Arrive in style, every time.</p>
+                                <p class="fleet-desc">
+                                    From wedding parties to Ascot race days and Henley Regatta, we coordinate group
+                                    and individual travel for occasions where presentation matters. We work with you
+                                    to plan pickup times, multiple stops, and group logistics in advance, so the day
+                                    runs smoothly without anyone worrying about transport.
+                                </p>
+                                <p class="fleet-desc">
+                                    Our Luxury MPV is especially popular for bridal parties and larger groups needing
+                                    to travel together, while our Executive Saloon suits smaller, more formal
+                                    arrivals. Bespoke itineraries and corporate dinner transport are also available on
+                                    request.
+                                </p>
+
+                                <div class="fleet-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-people-group"></i>
+                                        <span>Group & Multi-Stop Planning</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-ring"></i>
+                                        <span>Wedding Party Specialists</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <span>Bespoke Itineraries</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-star"></i>
+                                        <span>Premium Presentation</span>
+                                    </div>
+                                </div>
+
+                                <div class="fleet-pricing-banner">
+                                    <span>Custom quotes based on itinerary &amp; group size</span>
+                                </div>
+
+                                <a href="booking.html?service=events" class="btn btn-primary">Book This Service</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                            class="logo-cars">Cars</span></span>
+                    <span class="logo-sub">GODALMING</span>
+                </a>
+                <p>Providing premium taxi, chauffeur, and airport transfer services throughout Godalming and Surrey
+                    villages. Reliable, clean, and professional 24/7 travel.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="booking.html">Booking & Pricing</a></li>
+                    <li><a href="index.html#testimonials">Reviews</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-coverage">
+                <h4>Coverage Areas</h4>
+                <ul>
+                    <li>Godalming & Town Centre</li>
+                    <li>Milford, Witley & Hambledon</li>
+                    <li>Chiddingfold & Haslemere</li>
+                    <li>Bramley, Wonersh & Shamley Green</li>
+                    <li>Guildford & surrounding villages</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Wizz Cars Godalming. All Rights Reserved. Private Hire Operators Licensed in Surrey.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact">
+        <a href="tel:07833814223" class="float-btn float-phone" aria-label="Call Us">
+            <i class="fa-solid fa-phone"></i>
+            <span class="float-label">Call Us Now</span>
+        </a>
+        <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="float-label">Let's Chat</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js?v=6"></script>
+</body>
+
+</html>

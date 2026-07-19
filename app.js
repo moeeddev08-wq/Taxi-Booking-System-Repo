@@ -11,7 +11,6 @@ function sanitizeForSheet(value) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    initThemeToggle();
     initScrollHeader();
     initMobileMenu();
     initFareEstimator();
@@ -105,6 +104,29 @@ function initMobileMenu() {
     });
 }
 
+// 3b. Services Page Tab Switcher
+function switchServiceTab(serviceKey) {
+    const tabs = document.querySelectorAll('#service-tabs .tab-btn');
+    const contents = document.querySelectorAll('#services-page-header .fleet-tab-content');
+
+    tabs.forEach(tab => {
+        if (tab.id === `tab-btn-${serviceKey}`) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+
+    contents.forEach(content => {
+        if (content.id === `service-content-${serviceKey}`) {
+            content.classList.add('active');
+        } else {
+            content.classList.remove('active');
+        }
+    });
+}
+
+
 // 3. Fleet Showcase Tab Switcher
 function switchFleetTab(vehicleClass) {
     const tabs = document.querySelectorAll('.tab-btn');
@@ -162,23 +184,17 @@ function selectFleetInForm(vehicleClass) {
     bookingSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 4. Interactive Booking Fare Estimator
+// 4. Booking Form Handler (no live fare calculation — dispatch confirms pricing)
 function initFareEstimator() {
     const bookingForm = document.getElementById('booking-form');
+    if (!bookingForm) return;
+
     const pickupInput = document.getElementById('pickup-address');
     const dropoffInput = document.getElementById('dropoff-address');
     const serviceType = document.getElementById('service-type');
     const vehicleType = document.getElementById('vehicle-type');
     const passengerCount = document.getElementById('passenger-count');
     const luggageCount = document.getElementById('luggage-count');
-
-    // Fare outputs
-    const farePrice = document.getElementById('fare-price');
-    const fareNotes = document.getElementById('fare-notes');
-    const summaryVehicle = document.getElementById('summary-vehicle');
-    const summaryPassengers = document.getElementById('summary-passengers');
-    const summaryLuggage = document.getElementById('summary-luggage');
-    const summaryDistance = document.getElementById('summary-distance');
 
     // Modal elements
     const bookingModal = document.getElementById('booking-modal');
@@ -199,188 +215,57 @@ function initFareEstimator() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     timeInput.value = `${hours}:${minutes}`;
 
-    // Pseudorandom distance generator based on address character codes (stable output)
-    function calculatePseudoDistance(pickup, dropoff) {
-        if (!pickup || !dropoff) return 0;
-        let combined = (pickup + dropoff).toLowerCase().replace(/\s/g, '');
-        let hash = 0;
-        for (let i = 0; i < combined.length; i++) {
-            hash = combined.charCodeAt(i) + ((hash << 5) - hash);
+    // Pre-fill from URL parameters (?service=airport or ?vehicle=mpv from services.html / fleet.html)
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('service');
+    const vehicleParam = urlParams.get('vehicle');
+
+    if (serviceParam) {
+        const validServices = ['local', 'airport', 'long-distance', 'executive', 'events'];
+        if (validServices.includes(serviceParam)) {
+            serviceType.value = serviceParam;
         }
-        // Returns a stable distance between 4 and 28 miles
-        return Math.abs(hash % 25) + 4;
     }
 
-    // Main Calculator Function
-    function calculateFare() {
-        const pickup = pickupInput.value.trim();
-        const dropoff = dropoffInput.value.trim();
-        const service = serviceType.value;
-        const vehicle = vehicleType.value;
-
-        // Update summary text
-        const vehicleNames = {
-            saloon: 'Standard Saloon',
-            executive: 'Executive Saloon',
-            mpv: 'Luxury MPV (Minivan)'
+    if (vehicleParam) {
+        const vehicleDefaults = {
+            saloon: { passengers: '4', luggage: '3' },
+            executive: { passengers: '4', luggage: '3' },
+            mpv: { passengers: '8', luggage: '4' }
         };
-        const vehiclePassengers = { saloon: 'Up to 4', executive: 'Up to 4', mpv: 'Up to 8' };
-        const vehicleLuggage = { saloon: 'Up to 3 bags', executive: 'Up to 3 bags', mpv: 'Up to 6 bags' };
-
-        summaryVehicle.textContent = vehicleNames[vehicle];
-        summaryPassengers.textContent = vehiclePassengers[vehicle];
-        summaryLuggage.textContent = vehicleLuggage[vehicle];
-
-        if (!pickup || !dropoff) {
-            farePrice.textContent = '£0.00';
-            fareNotes.textContent = 'Please enter pickup and dropoff addresses';
-            summaryDistance.textContent = 'Awaiting route details';
-            return;
+        if (vehicleDefaults[vehicleParam]) {
+            vehicleType.value = vehicleParam;
+            passengerCount.value = vehicleDefaults[vehicleParam].passengers;
+            luggageCount.value = vehicleDefaults[vehicleParam].luggage;
         }
-
-        let distance = calculatePseudoDistance(pickup, dropoff);
-        let baseFare = 0;
-        let perMileRate = 0;
-        let isFixed = false;
-        let routeName = '';
-
-        // Check for common airport fixed routes
-        const dropoffLower = dropoff.toLowerCase();
-        const pickupLower = pickup.toLowerCase();
-
-        if (dropoffLower.includes('heathrow') || pickupLower.includes('heathrow')) {
-            baseFare = 85.00;
-            isFixed = true;
-            routeName = 'Heathrow Airport';
-        } else if (dropoffLower.includes('gatwick') || pickupLower.includes('gatwick')) {
-            baseFare = 85.00;
-            isFixed = true;
-            routeName = 'Gatwick Airport';
-        } else if (dropoffLower.includes('luton') || pickupLower.includes('luton')) {
-            baseFare = 170.00;
-            isFixed = true;
-            routeName = 'Luton Airport';
-        } else if (dropoffLower.includes('stansted') || pickupLower.includes('stansted')) {
-            baseFare = 190.00;
-            isFixed = true;
-            routeName = 'Stansted Airport';
-        } else if (dropoffLower.includes('london city') || pickupLower.includes('london city')) {
-            baseFare = 150.00;
-            isFixed = true;
-            routeName = 'London City Airport';
-        } else if (dropoffLower.includes('st pancras') || pickupLower.includes('st pancras') || dropoffLower.includes('kings cross') || pickupLower.includes('kings cross')) {
-            baseFare = 140.00;
-            isFixed = true;
-            routeName = 'St Pancras / Kings Cross';
-        } else if (dropoffLower.includes('wimbledon') || pickupLower.includes('wimbledon')) {
-            baseFare = 90.00;
-            isFixed = true;
-            routeName = 'Wimbledon Stadium';
-        } else if (dropoffLower.includes('oval') || pickupLower.includes('oval') || dropoffLower.includes('lords') || pickupLower.includes('lords')) {
-            baseFare = 120.00;
-            isFixed = true;
-            routeName = 'Lords / Oval Cricket Ground';
-        } else if (dropoffLower.includes('south west london') || pickupLower.includes('south west london')) {
-            baseFare = 120.00;
-            isFixed = true;
-            routeName = 'South West London';
-        } else if (dropoffLower.includes('central london') || pickupLower.includes('central london')) {
-            baseFare = 130.00;
-            isFixed = true;
-            routeName = 'Central London';
-        } else if (dropoffLower.includes('london') || pickupLower.includes('london')) {
-            baseFare = 120.00;
-            isFixed = true;
-            routeName = 'London';
-        }
-
-        // Standard rates calculation if not fixed airport route
-        if (!isFixed) {
-            switch (service) {
-                case 'local':
-                    baseFare = 6.00;
-                    perMileRate = 2.50;
-                    break;
-                case 'airport':
-                    baseFare = 15.00;
-                    perMileRate = 2.20;
-                    break;
-                case 'long-distance':
-                    baseFare = 12.00;
-                    perMileRate = 2.30;
-                    break;
-                case 'executive':
-                    baseFare = 25.00;
-                    perMileRate = 3.80;
-                    break;
-                default:
-                    baseFare = 6.00;
-                    perMileRate = 2.50;
-            }
-        }
-
-        // Vehicle multipliers
-        let vehicleMultiplier = 1.0;
-        if (vehicle === 'executive') vehicleMultiplier = 1.5;
-        if (vehicle === 'mpv') vehicleMultiplier = 1.8;
-
-        let totalFare = 0;
-        if (isFixed) {
-            totalFare = baseFare * vehicleMultiplier;
-            fareNotes.textContent = `*Fixed Route Rate for ${routeName}`;
-            summaryDistance.textContent = 'Fixed Airport Route';
-        } else {
-            totalFare = (baseFare + (distance * perMileRate)) * vehicleMultiplier;
-            fareNotes.textContent = `*Estimated Route Rate (Distance: ~${distance} miles)`;
-            summaryDistance.textContent = `~${distance} miles`;
-        }
-
-        // Format and display
-        farePrice.textContent = `£${totalFare.toFixed(2)}`;
     }
 
-    // Attach Event Listeners for Live Calculating
-    const inputs = [pickupInput, dropoffInput, serviceType, vehicleType, passengerCount, luggageCount];
-    inputs.forEach(input => {
-        input.addEventListener('change', calculateFare);
-        input.addEventListener('input', calculateFare);
-    });
-    calculateFare()
-
-    // Make popular routes pre-fill the form when clicked (from side-panel or pricing plan table)
+    // Make popular routes / pricing table rows pre-fill pickup & dropoff when clicked
     const routeItems = document.querySelectorAll('.route-rate-item, .pricing-row');
     routeItems.forEach(item => {
         item.addEventListener('click', () => {
             const dest = item.getAttribute('data-destination') || item.getAttribute('data-route');
             pickupInput.value = 'Godalming, Surrey';
 
-            if (dest === 'Heathrow') {
-                dropoffInput.value = 'Heathrow Airport, Hounslow';
-            } else if (dest === 'Gatwick') {
-                dropoffInput.value = 'Gatwick Airport, Horley';
-            } else if (dest === 'Luton') {
-                dropoffInput.value = 'Luton Airport, Luton';
-            } else if (dest === 'Stansted') {
-                dropoffInput.value = 'Stansted Airport, Stansted Mountfitchet';
-            } else if (dest === 'London City') {
-                dropoffInput.value = 'London City Airport, Royal Docks';
-            } else if (dest === 'Kings Cross') {
-                dropoffInput.value = 'St Pancras / Kings Cross Station, London';
-            } else if (dest === 'South West London') {
-                dropoffInput.value = 'South West London, London';
-            } else if (dest === 'Oval') {
-                dropoffInput.value = 'Lords / Oval Cricket Ground, London';
-            } else if (dest === 'Wimbledon') {
-                dropoffInput.value = 'Wimbledon Stadium, London';
-            } else if (dest === 'Central London') {
-                dropoffInput.value = 'Central London, London';
+            const destinations = {
+                'Heathrow': 'Heathrow Airport, Hounslow',
+                'Gatwick': 'Gatwick Airport, Horley',
+                'Luton': 'Luton Airport, Luton',
+                'Stansted': 'Stansted Airport, Stansted Mountfitchet',
+                'London City': 'London City Airport, Royal Docks',
+                'Kings Cross': 'St Pancras / Kings Cross Station, London',
+                'South West London': 'South West London, London',
+                'Oval': 'Lords / Oval Cricket Ground, London',
+                'Wimbledon': 'Wimbledon Stadium, London',
+                'Central London': 'Central London, London'
+            };
+
+            if (destinations[dest]) {
+                dropoffInput.value = destinations[dest];
             }
             serviceType.value = 'airport';
 
-            // Trigger calculation
-            calculateFare();
-
-            // Smooth scroll to form fields
+            // Smooth scroll to form
             pickupInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
             // Pulse visual feedback
@@ -393,7 +278,7 @@ function initFareEstimator() {
         });
     });
 
-    // Handle Form Submission (Display Modal Popup)
+    // Handle Form Submission (Display Modal Popup — no fare shown, dispatch confirms pricing)
     bookingForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -419,24 +304,27 @@ function initFareEstimator() {
         const timeVal = document.getElementById('booking-time').value;
         document.getElementById('modal-datetime').textContent = `${dateVal} at ${timeVal}`;
 
-        const vehicleSelector = document.getElementById('vehicle-type');
-        document.getElementById('modal-vehicle').textContent = vehicleSelector.options[vehicleSelector.selectedIndex].text;
+        document.getElementById('modal-vehicle').textContent = vehicleType.options[vehicleType.selectedIndex].text;
 
-        document.getElementById('modal-fare').textContent = farePrice.textContent;
-
-        // Send booking data to Google Sheet + Email notification
+        // Send booking data to Google Sheet
         const nameField = document.getElementById('customer-name');
         const phoneField = document.getElementById('customer-phone');
+        const emailField = document.getElementById('customer-email');
+        const messageField = document.getElementById('booking-message');
 
         fetch(GOOGLE_SHEET_ENDPOINT, {
             method: "POST",
             body: JSON.stringify({
                 name: sanitizeForSheet(nameField ? nameField.value : ''),
                 phone: sanitizeForSheet(phoneField ? phoneField.value : ''),
+                email: sanitizeForSheet(emailField ? emailField.value : ''),
                 pickup: sanitizeForSheet(pickupInput.value),
                 dropoff: sanitizeForSheet(dropoffInput.value),
-                vehicle: vehicleSelector.options[vehicleSelector.selectedIndex].text,
-                fare: farePrice.textContent,
+                serviceType: serviceType.options[serviceType.selectedIndex].text,
+                vehicle: vehicleType.options[vehicleType.selectedIndex].text,
+                passengers: passengerCount.value,
+                luggage: luggageCount.value,
+                message: sanitizeForSheet(messageField ? messageField.value : ''),
                 bookingCode: bookingCode
             })
         }).catch((err) => {
@@ -445,19 +333,18 @@ function initFareEstimator() {
 
         // Open Modal
         bookingModal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Lock background scroll
+        document.body.style.overflow = 'hidden';
     });
 
     // Close Modal Functions
     const closeModal = () => {
         bookingModal.classList.remove('active');
-        document.body.style.overflow = 'auto'; // Unlock scroll
+        document.body.style.overflow = 'auto';
         bookingForm.reset();
 
         // Re-set defaults
         dateInput.value = today;
         timeInput.value = `${hours}:${minutes}`;
-        calculateFare();
     };
 
     modalCloseBtn.addEventListener('click', closeModal);
@@ -467,12 +354,14 @@ function initFareEstimator() {
     });
 }
 
+
 // 5. Testimonials Slider Carousel
 function initTestimonialSlider() {
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.slider-dots .dot');
     const prevBtn = document.getElementById('slider-prev');
     const nextBtn = document.getElementById('slider-next');
+    if (!prevBtn || !nextBtn || slides.length === 0) return;
     let currentSlide = 0;
     let slideInterval;
 

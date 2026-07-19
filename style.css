@@ -1,33 +1,55 @@
-/* Modern Premium Chauffeur Design System */
+/* ============================================================
+   Wizz Cars Godalming — Premium Light Theme Design System
+   Palette: Crisp White · Slate Navy · Warm Gold · Soft Greys
+   ============================================================ */
 
 :root {
-    /* Color Palette */
-    --bg-darkest: #07080a;
-    --bg-dark: #0f1115;
-    --bg-card: rgba(21, 24, 30, 0.7);
-    --bg-card-hover: rgba(28, 32, 40, 0.85);
+    /* ── Backgrounds ── */
+    --bg-page: #f8f9fc;
+    /* main page background — cool off-white */
+    --bg-alt: #ffffff;
+    /* alternate section — pure white */
+    --bg-card: #ffffff;
+    /* card surface */
+    --bg-card-hover: #fdfcfa;
+    /* card surface on hover */
+    --bg-darkest: #f8f9fc;
+    /* alias kept for legacy refs */
+    --bg-dark: #ffffff;
+    /* alias kept for legacy refs */
 
-    /* Accents (Gold/Amber & White/Muted) */
-    --gold: #d4af37;
-    --gold-rgb: 212, 175, 55;
-    --gold-hover: #e5c158;
-    --gold-light: rgba(212, 175, 55, 0.1);
+    /* ── Text ── */
+    --text-white: #0f172a;
+    /* primary text — deep slate navy */
+    --text-gray: #64748b;
+    /* secondary / muted text */
+    --text-dark: #f8f9fc;
+    /* used on dark/gold backgrounds */
 
-    --text-white: #f5f6f8;
-    --text-gray: #9ba4b4;
-    --text-dark: #12141a;
+    /* ── Brand Gold ── */
+    --gold: #c9a227;
+    /* slightly warmer, richer gold */
+    --gold-rgb: 201, 162, 39;
+    --gold-hover: #d4af37;
+    /* brighter on hover */
+    --gold-light: rgba(201, 162, 39, 0.10);
+    /* gold tint fill */
 
-    /* Borders & Outlines */
-    --border-color: rgba(212, 175, 55, 0.15);
-    --border-hover: rgba(212, 175, 55, 0.4);
-    --border-light: rgba(255, 255, 255, 0.05);
+    /* ── Borders ── */
+    --border-light: rgba(15, 23, 42, 0.07);
+    /* subtle divider lines */
+    --border-color: rgba(201, 162, 39, 0.25);
+    /* gold-tinted border */
+    --border-hover: rgba(201, 162, 39, 0.55);
+    /* gold border on hover */
 
-    /* Shadows */
-    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
-    --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.15);
-    --shadow-gold-hover: 0 10px 30px rgba(212, 175, 55, 0.3);
+    /* ── Shadows ── */
+    --shadow-soft: 0 4px 24px rgba(15, 23, 42, 0.07);
+    --shadow-card: 0 1px 4px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.06);
+    --shadow-gold: 0 4px 20px rgba(201, 162, 39, 0.18);
+    --shadow-gold-hover: 0 8px 28px rgba(201, 162, 39, 0.30);
 
-    /* Transitions */
+    /* ── Transitions ── */
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-fast: all 0.2s ease;
 }
@@ -42,17 +64,19 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    background-color: var(--bg-darkest);
+    background-color: var(--bg-page);
     color: var(--text-white);
     overflow-x: hidden;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
+    background-color: var(--bg-page);
+    color: var(--text-white);
 }
 
 h1,
@@ -142,9 +166,30 @@ iframe {
     margin-bottom: 60px;
 }
 
+.section-header {
+    position: relative;
+    text-align: center;
+    max-width: 100%;
+}
+
 .section-header h2 {
     font-size: 2.5rem;
     margin-bottom: 16px;
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 2px;
 }
 
 .section-header p {
@@ -159,10 +204,17 @@ iframe {
     background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-light);
+    border: 1px solid rgba(15, 23, 42, 0.08);
     border-radius: 16px;
-    box-shadow: var(--shadow-soft);
-    transition: var(--transition-smooth);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 12px 32px rgba(15, 23, 42, 0.08);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light mode glass card */
+body.light-mode .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
 /* Buttons */
@@ -216,16 +268,18 @@ iframe {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(7, 8, 10, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(248, 249, 252, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-light);
     transition: var(--transition-smooth);
+    box-shadow: 0 1px 12px rgba(15, 23, 42, 0.05);
 }
 
 .site-header.scroll-scrolled {
-    background: var(--bg-darkest);
-    padding: 12px 0;
+    background: rgba(248, 249, 252, 0.98);
+    padding: 4px 0;
+    box-shadow: 0 2px 20px rgba(15, 23, 42, 0.08);
 }
 
 .header-container {
@@ -314,6 +368,58 @@ iframe {
     gap: 16px;
 }
 
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    color: var(--gold);
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--gold);
+    color: var(--text-dark);
+    transform: rotate(20deg) scale(1.1);
+    box-shadow: var(--shadow-gold);
+}
+
+.theme-toggle-btn .icon-sun,
+.theme-toggle-btn .icon-moon {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+}
+
+/* Dark mode: show moon, hide sun */
+.theme-toggle-btn .icon-sun {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.theme-toggle-btn .icon-moon {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+/* Light mode: show sun, hide moon */
+body.light-mode .theme-toggle-btn .icon-sun {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+body.light-mode .theme-toggle-btn .icon-moon {
+    opacity: 1;
+    transform: scale(1);
+}
+
 .phone-btn {
     display: flex;
     align-items: center;
@@ -352,7 +458,8 @@ iframe {
 /* Hero Section */
 .hero-section {
     padding: 180px 0 100px 0;
-    background: radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+    background: linear-gradient(135deg, #f8f9fc 0%, #fff8ed 100%);
+    border-bottom: 1px solid var(--border-light);
 }
 
 .hero-container {
@@ -420,7 +527,7 @@ iframe {
 /* Booking Section */
 .booking-section {
     padding: 100px 0;
-    background-color: var(--bg-dark);
+    background-color: var(--bg-alt);
 }
 
 .booking-grid {
@@ -465,11 +572,11 @@ iframe {
 
 .form-group input,
 .form-group select {
-    background: rgba(7, 8, 10, 0.6);
-    border: 1px solid var(--border-light);
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.12);
     border-radius: 8px;
     padding: 12px 16px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     color: var(--text-white);
     font-size: 0.95rem;
     transition: var(--transition-smooth);
@@ -483,7 +590,7 @@ iframe {
 }
 
 .form-group select option {
-    background: var(--bg-darkest);
+    background: #ffffff;
     color: var(--text-white);
 }
 
@@ -505,7 +612,7 @@ iframe {
     flex-direction: column;
     justify-content: space-between;
     border-color: var(--border-color);
-    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(35, 25, 10, 0.2) 100%);
+    background: linear-gradient(135deg, #fffdf5 0%, #fdf8ec 100%);
 }
 
 .fare-header {
@@ -552,7 +659,7 @@ iframe {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border-light);
 }
 
 .summary-list li:last-child {
@@ -579,7 +686,7 @@ iframe {
     display: flex;
     justify-content: space-between;
     padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(201, 162, 39, 0.04);
     border-left: 2px solid var(--gold);
     border-radius: 0 6px 6px 0;
     margin-bottom: 8px;
@@ -601,7 +708,8 @@ iframe {
     display: flex;
     gap: 16px;
     padding: 16px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(201, 162, 39, 0.05);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
 }
 
@@ -625,6 +733,7 @@ iframe {
 /* Services Section */
 .services-section {
     padding: 100px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f2 100%);
 }
 
 .services-grid {
@@ -641,7 +750,7 @@ iframe {
 .service-card:hover {
     transform: translateY(-8px);
     border-color: var(--border-hover);
-    box-shadow: var(--shadow-soft), var(--shadow-gold);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 20px 40px rgba(15, 23, 42, 0.12), var(--shadow-gold);
 }
 
 .service-icon {
@@ -654,6 +763,17 @@ iframe {
     background: var(--gold-light);
     border: 1px solid var(--border-color);
     margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.service-card:hover .service-icon {
+    background: var(--gold);
+    box-shadow: 0 6px 20px rgba(201, 162, 39, 0.3);
+}
+
+.service-card:hover .service-icon i {
+    color: var(--text-dark);
 }
 
 .service-icon i {
@@ -683,7 +803,7 @@ iframe {
 }
 
 .service-card:hover .service-link {
-    color: var(--text-white);
+    color: var(--gold-hover);
 }
 
 .service-card:hover .service-link i {
@@ -694,7 +814,7 @@ iframe {
 /* Fleet Showcase Section */
 .fleet-section {
     padding: 100px 0;
-    background-color: var(--bg-dark);
+    background-color: #faf8f2;
 }
 
 .fleet-tabs {
@@ -741,7 +861,7 @@ iframe {
 
 .fleet-image-wrap {
     padding: 12px;
-    background: rgba(255, 255, 255, 0.02);
+    background: #f8f9fc;
     border-radius: 16px;
     border: 1px solid var(--border-light);
 }
@@ -805,7 +925,7 @@ iframe {
 /* Benefits Section */
 .benefits-section {
     padding: 80px 0;
-    background-color: var(--bg-darkest);
+    background: linear-gradient(135deg, #fdf9ef 0%, #f8f9fc 100%);
 }
 
 .benefits-grid {
@@ -1068,12 +1188,12 @@ iframe {
 .inquiry-form input,
 .inquiry-form textarea {
     width: 100%;
-    background: rgba(7, 8, 10, 0.4);
-    border: 1px solid var(--border-light);
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.12);
     border-radius: 8px;
     padding: 12px;
     color: var(--text-white);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.9rem;
     transition: var(--transition-smooth);
 }
@@ -1379,7 +1499,7 @@ iframe {
     margin: 0 auto;
     padding: 48px;
     border-color: var(--border-color);
-    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(10, 11, 15, 0.9) 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #fdfcfa 100%);
 }
 
 .pricing-table-wrap:hover {

@@ -11,6 +11,7 @@ function sanitizeForSheet(value) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
     initScrollHeader();
     initMobileMenu();
     initFareEstimator();
@@ -18,6 +19,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initAnnouncePopup();
 });
+
+// 8. Light/Dark Mode Theme Toggle
+function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    if (!toggleBtn) return;
+
+    // Check saved preference; default is light mode (root variables)
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+}
+
 
 // 7. Top Announcement Popup (shows once per browser session)
 function initAnnouncePopup() {
@@ -501,6 +524,12 @@ function initContactForm() {
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        // Honeypot spam check
+        const honeypot = document.getElementById('inquiry-website');
+        if (honeypot && honeypot.value !== '') {
+            return;
+        }
 
         const originalBtnText = form.querySelector('button').textContent;
         const btn = form.querySelector('button');

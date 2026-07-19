@@ -1757,6 +1757,19 @@ body.light-mode .theme-toggle-btn .icon-moon {
         padding: 10px 0;
     }
 
+    .fleet-tabs {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tab-btn {
+        flex: 1 1 auto;
+        min-width: 130px;
+        font-size: 0.85rem;
+        padding: 10px 14px;
+        text-align: center;
+    }
+
     .main-nav {
         position: fixed;
         top: 80px;

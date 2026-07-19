@@ -192,6 +192,11 @@ iframe {
     border-radius: 2px;
 }
 
+/* Pricing section already has its own decorative dots line — skip the extra underline */
+.pricing-plan-section .section-header h2::after {
+    display: none;
+}
+
 .section-header p {
     color: var(--text-gray);
     font-size: 1.1rem;
@@ -1891,26 +1896,56 @@ body.light-mode .theme-toggle-btn .icon-moon {
     }
 }
 
-.announce-popup {
+/* Blurred backdrop behind the popup */
+.announce-backdrop {
     position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1099;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.announce-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.announce-popup {
+    position: fixed;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -150%);
+    transform: translate(-50%, -50%) scale(0.9);
     width: 94%;
     max-width: 640px;
-    background: var(--bg-darkest);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--gold);
-    border-top: none;
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
     padding: 36px 40px 32px;
     z-index: 1100;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .announce-popup.show {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body.dark-mode .announce-popup {
+    background: rgba(21, 24, 30, 0.85);
 }
 
 .announce-popup h3 {

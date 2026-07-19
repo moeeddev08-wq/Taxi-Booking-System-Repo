@@ -41,32 +41,10 @@ function initThemeToggle() {
     });
 }
 
-
-// 7. Top Announcement Popup (shows once per browser session)
-function initAnnouncePopup() {
-    const popup = document.getElementById('announce-popup');
-    const closeBtn = document.getElementById('announce-close');
-    const ctaBtn = document.getElementById('announce-btn');
-    if (!popup) return;
-
-    // Only show once per browser session (not on every single refresh)
-    if (sessionStorage.getItem('announceDismissed') === 'true') return;
-
-    setTimeout(() => {
-        popup.classList.add('show');
-    }, 1000);
-
-    const dismiss = () => {
-        popup.classList.remove('show');
-        sessionStorage.setItem('announceDismissed', 'true');
-    };
-
-    closeBtn.addEventListener('click', dismiss);
-    ctaBtn.addEventListener('click', dismiss);
-}
 // 1. Sticky Navigation Scroll Effect
 function initScrollHeader() {
     const header = document.getElementById('site-header');
+    if (!header) return;
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             header.classList.add('scroll-scrolled');
@@ -74,6 +52,37 @@ function initScrollHeader() {
             header.classList.remove('scroll-scrolled');
         }
     });
+}
+
+
+// 7. Top Announcement Popup (shows once per browser session)
+// 7. Top Announcement Popup (center modal, blurred backdrop, shows once per session)
+function initAnnouncePopup() {
+    const popup = document.getElementById('announce-popup');
+    const backdrop = document.getElementById('announce-backdrop');
+    const closeBtn = document.getElementById('announce-close');
+    const ctaBtn = document.getElementById('announce-btn');
+    if (!popup || !backdrop) return;
+
+    // Only show once per browser session (not on every single refresh)
+    if (sessionStorage.getItem('announceDismissed') === 'true') return;
+
+    setTimeout(() => {
+        popup.classList.add('show');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }, 1000);
+
+    const dismiss = () => {
+        popup.classList.remove('show');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = 'auto';
+        sessionStorage.setItem('announceDismissed', 'true');
+    };
+
+    closeBtn.addEventListener('click', dismiss);
+    ctaBtn.addEventListener('click', dismiss);
+    backdrop.addEventListener('click', dismiss); // clicking outside the popup closes it
 }
 
 // 2. Mobile Responsive Menu

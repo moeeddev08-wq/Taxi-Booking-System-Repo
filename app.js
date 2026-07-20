@@ -279,6 +279,10 @@ function initFareEstimator() {
     });
 
     // Handle Form Submission (Display Modal Popup — no fare shown, dispatch confirms pricing)
+    // Handle Form Submission (Display Modal Popup — no fare shown, dispatch confirms pricing)
+    const submitBtn = document.getElementById('btn-submit-booking');
+    const submitBtnOriginalText = submitBtn ? submitBtn.textContent : '';
+
     bookingForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -290,6 +294,12 @@ function initFareEstimator() {
 
         // Final validations
         if (!pickupInput.value || !dropoffInput.value) return;
+
+        // Show loading state on submit button
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Submitting...';
+        }
 
         // Generate dynamic mock Booking Code
         const randNum = Math.floor(10000 + Math.random() * 90000);
@@ -331,9 +341,16 @@ function initFareEstimator() {
             console.error('Booking submission failed to reach Google Sheet:', err);
         });
 
-        // Open Modal
-        bookingModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        // Slight delay so the loading state is visible, then open modal
+        setTimeout(() => {
+            bookingModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = submitBtnOriginalText;
+            }
+        }, 600);
     });
 
     // Close Modal Functions

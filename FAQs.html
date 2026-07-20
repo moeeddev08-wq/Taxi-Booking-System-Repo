@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs | Wizz Cars Godalming</title>
+    <meta name="description"
+        content="Frequently asked questions about booking, pricing, airport transfers, and our fleet at Wizz Cars Godalming.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=6">
+</head>
+
+<body>
+
+    <!-- Top Announcement Popup -->
+    <div class="announce-backdrop" id="announce-backdrop"></div>
+    <div class="announce-popup" id="announce-popup">
+        <button class="announce-close" id="announce-close" aria-label="Close">&times;</button>
+        <h3>Book Your Godalming Airport Taxi</h3>
+        <p>Fast, reliable transfers to Heathrow, Gatwick &amp; all major UK airports. Professional drivers, on-time
+            pickups every time.</p>
+        <a href="tel:07833814223" class="announce-btn" id="announce-btn">Instant Contact</a>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" id="header-logo">
+                <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                        class="logo-cars">Cars</span></span>
+                <span class="logo-sub">GODALMING</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="fleet.html" class="nav-link">Our Fleet</a></li>
+                    <li><a href="booking.html" class="nav-link">Booking</a></li>
+                    <li><a href="faqs.html" class="nav-link active">FAQs</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="tel:07833814223" class="phone-btn" id="header-phone-btn" title="Call Us">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>07833814223</span>
+                </a>
+                <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+                    target="_blank" rel="noopener" class="header-whatsapp-btn" id="header-whatsapp-btn"
+                    title="WhatsApp Chat">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- FAQs Section -->
+        <section class="fleet-section" id="faqs" style="padding-top: 180px;">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Frequently Asked</div>
+                    <h2>Got Questions? We've Got Answers</h2>
+                    <p>Everything you need to know about booking, pricing, and travelling with Wizz Cars
+                        Godalming.</p>
+                </div>
+
+                <div class="faq-container">
+                    <!-- Booking & Pricing -->
+                    <h3 class="faq-category">Booking & Pricing</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>How do I book a journey?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Fill in the booking form on our <a href="booking.html">Booking page</a> with your
+                                pickup, destination, date, and time. No card payment is needed upfront — our
+                                dispatch team will confirm your booking and final price by SMS or email within 10
+                                minutes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>Do I need to pay online when booking?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No. There's no upfront card payment required. Payment is arranged directly with your
+                                driver, or via invoice for corporate accounts.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>How is my fare calculated?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Major airport and popular city routes have transparent, fixed rates — see our
+                                <a href="booking.html">Pricing Plan</a>. Other journeys are estimated based on
+                                distance and vehicle class, and confirmed by our dispatch team after booking.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>Can I cancel or change my booking?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes — just call or WhatsApp us as early as possible and we'll adjust or cancel your
+                                journey for you.</p>
+                        </div>
+                    </div>
+
+                    <!-- Airport Transfers -->
+                    <h3 class="faq-category">Airport Transfers</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>What happens if my flight is delayed?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We track your flight in real time, so if you're delayed, your pickup is automatically
+                                adjusted to your actual landing time — no extra charge.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>What is meet & greet service?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Your driver waits for you in the arrivals hall with a name sign, rather than at the
+                                curb, so you can find them easily after collecting your luggage.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>How far in advance should I book an airport transfer?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We recommend booking at least 24 hours ahead for airport runs, though we do our best
+                                to accommodate short-notice requests where possible — call us directly for
+                                urgent bookings.</p>
+                        </div>
+                    </div>
+
+                    <!-- Vehicles -->
+                    <h3 class="faq-category">Vehicles & Capacity</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>How many passengers and bags can each vehicle take?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Standard Saloon and Executive Chauffeur both seat up to 4 passengers with 3 large
+                                bags. Our Luxury MPV seats up to 8 passengers with 6+ large bags. See our
+                                <a href="fleet.html">Fleet page</a> for full specs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>Do you provide child seats?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Please mention any special requirements, including child seats, in the message box
+                                when booking, and we'll do our best to accommodate your request.</p>
+                        </div>
+                    </div>
+
+                    <!-- Service Area -->
+                    <h3 class="faq-category">Service Area</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>Which areas do you cover?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We're based in Godalming and cover Milford, Witley, Hambledon, Chiddingfold,
+                                Haslemere, Bramley, Wonersh, Shamley Green, and Guildford, plus direct transfers to
+                                all major UK airports and London.</p>
+                        </div>
+                    </div>
+
+                    <!-- Payment & Corporate -->
+                    <h3 class="faq-category">Payment & Corporate</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>Do you offer corporate accounts?</span>
+                            <i class="fa-solid fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes. If your business needs regular, invoiced private hire,
+                                <a href="contact.html">get in touch</a> and we'll set up a corporate account for
+                                you.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-cta">
+                    <p>Still have a question?</p>
+                    <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                            class="logo-cars">Cars</span></span>
+                    <span class="logo-sub">GODALMING</span>
+                </a>
+                <p>Providing premium taxi, chauffeur, and airport transfer services throughout Godalming and Surrey
+                    villages. Reliable, clean, and professional 24/7 travel.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="booking.html">Booking & Pricing</a></li>
+                    <li><a href="faqs.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-coverage">
+                <h4>Coverage Areas</h4>
+                <ul>
+                    <li>Godalming & Town Centre</li>
+                    <li>Milford, Witley & Hambledon</li>
+                    <li>Chiddingfold & Haslemere</li>
+                    <li>Bramley, Wonersh & Shamley Green</li>
+                    <li>Guildford & surrounding villages</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Wizz Cars Godalming. All Rights Reserved. Private Hire Operators Licensed in Surrey.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact">
+        <a href="tel:07833814223" class="float-btn float-phone" aria-label="Call Us">
+            <i class="fa-solid fa-phone"></i>
+            <span class="float-label">Call Us Now</span>
+        </a>
+        <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="float-label">Let's Chat</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js?v=6"></script>
+</body>
+
+</html>

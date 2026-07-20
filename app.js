@@ -465,3 +465,20 @@ function initContactForm() {
         }, 1200);
     });
 }
+
+// 9. FAQ Accordion (only one answer open at a time)
+function toggleFaq(button) {
+    const item = button.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('active');
+
+    document.querySelectorAll('.faq-item.active').forEach(openItem => {
+        openItem.classList.remove('active');
+        openItem.querySelector('.faq-answer').style.maxHeight = null;
+    });
+
+    if (!isOpen) {
+        item.classList.add('active');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+}

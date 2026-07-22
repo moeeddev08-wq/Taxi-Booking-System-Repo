@@ -18,10 +18,9 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
-    alert("Login Successful!");
 
+    window.location.href = "dashboard.html";
     console.log(data);
 
-    // Agle step me yahan dashboard par redirect karenge
-    // window.location.href = "dashboard.html";
+
 });

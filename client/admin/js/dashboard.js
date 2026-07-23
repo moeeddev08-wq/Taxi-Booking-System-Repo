@@ -52,7 +52,7 @@ function renderBookings(rows) {
     bookingCount.textContent = rows.length + (rows.length === 1 ? ' booking' : ' bookings');
 
     const rowsHtml = rows.map(b => `
-    <tr>
+    <tr data-id="${escapeHtml(b.id)}">
       <td>${formatDateTime(b.date_time)}</td>
       <td>${escapeHtml(b.name)}</td>
       <td>${escapeHtml(b.phone)}</td>
@@ -61,6 +61,7 @@ function renderBookings(rows) {
       <td>${b.fare !== null && b.fare !== undefined ? '£' + escapeHtml(b.fare) : '—'}</td>
       <td>${escapeHtml(b.notes) || '—'}</td>
       <td><span class="badge">${formatDateTime(b.created_at)}</span></td>
+      <td><button class="delete-btn" data-id="${escapeHtml(b.id)}">Delete</button></td>
     </tr>
   `).join('');
 
@@ -76,11 +77,39 @@ function renderBookings(rows) {
           <th>Fare</th>
           <th>Notes</th>
           <th>Submitted</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>${rowsHtml}</tbody>
     </table>
   `;
+
+    bookingsArea.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteBooking(btn.dataset.id, btn));
+    });
+}
+
+async function deleteBooking(id, btnEl) {
+    const confirmed = window.confirm('Delete this booking? This cannot be undone.');
+    if (!confirmed) return;
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Deleting...';
+
+    const { error } = await supabaseClient
+        .from('bookings')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        console.error('Error deleting booking:', error);
+        alert('Could not delete booking: ' + error.message);
+        btnEl.disabled = false;
+        btnEl.textContent = 'Delete';
+        return;
+    }
+
+    loadBookings();
 }
 
 async function loadBookings() {

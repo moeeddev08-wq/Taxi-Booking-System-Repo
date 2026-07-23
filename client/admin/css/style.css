@@ -182,13 +182,14 @@ body {
 .sidebar-logout {
     margin-top: 14px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #f2f1ee;
+    border: 1px solid #ffffff;
+    color: #ffffff;
 }
 
 .sidebar-logout:hover {
+    background: transparent;
     border-color: var(--danger);
-    color: #ff9d8f;
+    color: var(--danger);
 }
 
 .app-main {
@@ -226,7 +227,7 @@ body {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    color: var(--ink);
+    color: var(--paper);
 }
 
 .logout-btn:hover {
@@ -354,4 +355,25 @@ tr:last-child td {
 
 .refresh-btn:hover {
     border-color: var(--accent);
+}
+
+.delete-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--danger);
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #fbeae7;
+    border-color: var(--danger);
+}
+
+.delete-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

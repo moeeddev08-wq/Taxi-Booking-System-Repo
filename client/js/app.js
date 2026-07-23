@@ -383,7 +383,7 @@ function initFareEstimator() {
                 {
                     name: nameField ? nameField.value : '',
                     phone: phoneField ? phoneField.value : '',
-                    pick_location: pickupInput.value,
+                    pickup_location: pickupInput.value,
                     dropoff_location: dropoffInput.value,
                     date_time: pickupDateTime,
                     fare: calculatedFare,

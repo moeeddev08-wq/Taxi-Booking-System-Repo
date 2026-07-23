@@ -11,29 +11,146 @@
 
 <body>
 
-    <div class="topbar">
-        <div>
-            <div class="topbar-brand">Wizz Cars Godalming</div>
-            <div class="topbar-sub" id="userEmail">Admin Dashboard</div>
+    <div class="app-shell">
+
+        <aside class="sidebar">
+            <div class="sidebar-brand">Wizz Cars<br>Godalming</div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-section="bookings">
+                    <span class="nav-icon">📋</span> Bookings
+                </button>
+                <button class="nav-item" data-section="prices">
+                    <span class="nav-icon">💰</span> Prices
+                </button>
+                <button class="nav-item" data-section="fleet">
+                    <span class="nav-icon">🚗</span> Fleet
+                </button>
+                <button class="nav-item" data-section="services">
+                    <span class="nav-icon">🛠️</span> Services
+                </button>
+                <button class="nav-item" data-section="testimonials">
+                    <span class="nav-icon">⭐</span> Testimonials
+                </button>
+                <button class="nav-item" data-section="faqs">
+                    <span class="nav-icon">❓</span> FAQs
+                </button>
+                <button class="nav-item" data-section="contact">
+                    <span class="nav-icon">📞</span> Contact Details
+                </button>
+                <button class="nav-item" data-section="gallery">
+                    <span class="nav-icon">🖼️</span> Logo &amp; Gallery
+                </button>
+                <button class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙️</span> Settings
+                </button>
+            </nav>
+
+            <button class="logout-btn sidebar-logout" id="logoutBtn">Log out</button>
+        </aside>
+
+        <div class="app-main">
+            <div class="topbar">
+                <div>
+                    <div class="topbar-title" id="sectionTitle">Bookings</div>
+                    <div class="topbar-sub" id="userEmail">Admin Dashboard</div>
+                </div>
+            </div>
+
+            <main>
+
+                <!-- BOOKINGS SECTION (live/working) -->
+                <section class="panel" id="section-bookings">
+                    <div class="section-head">
+                        <h1>Bookings</h1>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span class="count" id="bookingCount"></span>
+                            <button class="refresh-btn" id="refreshBtn">Refresh</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div id="bookingsArea">
+                            <div class="state-msg">Loading bookings...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PLACEHOLDER SECTIONS (Phase 2+) -->
+                <section class="panel" id="section-prices" hidden>
+                    <div class="section-head">
+                        <h1>Prices</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 2 — edit airport transfer prices here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-fleet" hidden>
+                    <div class="section-head">
+                        <h1>Fleet</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 3 — manage your vehicles here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-services" hidden>
+                    <div class="section-head">
+                        <h1>Services</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 4 — manage your service list here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-testimonials" hidden>
+                    <div class="section-head">
+                        <h1>Testimonials</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 5 — manage customer reviews here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-faqs" hidden>
+                    <div class="section-head">
+                        <h1>FAQs</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 6 — manage FAQs here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-contact" hidden>
+                    <div class="section-head">
+                        <h1>Contact Details</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 7 — edit phone, email, address & WhatsApp here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-gallery" hidden>
+                    <div class="section-head">
+                        <h1>Logo &amp; Gallery</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 8 — upload logo & gallery images here.</div>
+                    </div>
+                </section>
+
+                <section class="panel" id="section-settings" hidden>
+                    <div class="section-head">
+                        <h1>Settings</h1>
+                    </div>
+                    <div class="card">
+                        <div class="state-msg">Coming in Phase 9 — final settings & polish.</div>
+                    </div>
+                </section>
+
+            </main>
         </div>
-        <button class="logout-btn" id="logoutBtn">Log out</button>
     </div>
-
-    <main>
-        <div class="section-head">
-            <h1>Bookings</h1>
-            <div style="display:flex; align-items:center; gap:12px;">
-                <span class="count" id="bookingCount"></span>
-                <button class="refresh-btn" id="refreshBtn">Refresh</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div id="bookingsArea">
-                <div class="state-msg">Loading bookings...</div>
-            </div>
-        </div>
-    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js"></script>

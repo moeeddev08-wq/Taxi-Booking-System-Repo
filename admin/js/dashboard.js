@@ -3,6 +3,26 @@ const bookingCount = document.getElementById('bookingCount');
 const userEmailEl = document.getElementById('userEmail');
 const logoutBtn = document.getElementById('logoutBtn');
 const refreshBtn = document.getElementById('refreshBtn');
+const sectionTitle = document.getElementById('sectionTitle');
+const navItems = document.querySelectorAll('.nav-item');
+
+// ---------- Sidebar section switching ----------
+function showSection(sectionKey) {
+    document.querySelectorAll('.panel').forEach(panel => {
+        panel.hidden = panel.id !== `section-${sectionKey}`;
+    });
+
+    navItems.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.section === sectionKey);
+    });
+
+    const activeBtn = document.querySelector(`.nav-item[data-section="${sectionKey}"]`);
+    sectionTitle.textContent = activeBtn ? activeBtn.textContent.trim() : sectionKey;
+}
+
+navItems.forEach(btn => {
+    btn.addEventListener('click', () => showSection(btn.dataset.section));
+});
 
 function escapeHtml(str) {
     if (str === null || str === undefined) return '';

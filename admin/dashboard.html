@@ -4,47 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Wizz Cars Godalming</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard — Wizz Cars Godalming Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <h1>Welcome Admin 👋</h1>
+    <div class="topbar">
+        <div>
+            <div class="topbar-brand">Wizz Cars Godalming</div>
+            <div class="topbar-sub" id="userEmail">Admin Dashboard</div>
+        </div>
+        <button class="logout-btn" id="logoutBtn">Log out</button>
+    </div>
 
-    <p>You have successfully logged in.</p>
+    <main>
+        <div class="section-head">
+            <h1>Bookings</h1>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span class="count" id="bookingCount"></span>
+                <button class="refresh-btn" id="refreshBtn">Refresh</button>
+            </div>
+        </div>
 
-    <button id="logoutBtn">Logout</button>
-
-    <hr>
-
-    <h2>Bookings <span id="new-booking-badge" style="display:none; color:red;">🔴 New!</span></h2>
-
-    <table id="bookings-table" border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Pickup</th>
-                <th>Dropoff</th>
-                <th>Fare</th>
-                <th>Status</th>
-                <th>Notes</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="bookings-body">
-            <tr>
-                <td colspan="9">Loading bookings...</td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="card">
+            <div id="bookingsArea">
+                <div class="state-msg">Loading bookings...</div>
+            </div>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="module" src="js/dashboard.js"></script>
-
+    <script src="js/supabase-client.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 
 </html>

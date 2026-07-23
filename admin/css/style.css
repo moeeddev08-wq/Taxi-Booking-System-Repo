@@ -1,0 +1,239 @@
+:root {
+    --ink: #14181f;
+    --paper: #f7f5f1;
+    --panel: #ffffff;
+    --line: #e3e0d8;
+    --accent: #1f6f4a;
+    --accent-dark: #165236;
+    --danger: #b3372c;
+    --muted: #6b6f76;
+    --radius: 10px;
+    font-family: "Inter", "Segoe UI", -apple-system, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+}
+
+/* ---------- Login screen ---------- */
+.login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    box-shadow: 0 1px 3px rgba(20, 24, 31, 0.06);
+}
+
+.login-brand {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.login-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 24px;
+}
+
+.field {
+    margin-bottom: 16px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink);
+}
+
+.field input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--paper);
+}
+
+.field input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    background: #fff;
+}
+
+.btn {
+    width: 100%;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--accent-dark);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error-msg {
+    background: #fbeae7;
+    color: var(--danger);
+    border: 1px solid #f0c7c0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: none;
+}
+
+/* ---------- Dashboard shell ---------- */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+}
+
+.topbar-brand {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.topbar-sub {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--ink);
+}
+
+.logout-btn:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+}
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.section-head h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.section-head .count {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+th {
+    text-align: left;
+    padding: 10px 14px;
+    background: #f1efe9;
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid var(--line);
+}
+
+td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.state-msg {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #e7f2ec;
+    color: var(--accent-dark);
+}
+
+.refresh-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    border-color: var(--accent);
+}

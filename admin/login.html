@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — Wizz Cars Godalming</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="login-wrap">
+        <div class="login-card">
+            <div class="login-brand">Wizz Cars Godalming</div>
+            <h1 class="login-title">Admin Login</h1>
+
+            <div class="error-msg" id="errorMsg"></div>
+
+            <form id="loginForm">
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Log in</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

@@ -1,145 +1,110 @@
-import supabase from "./supabase.js";
+const bookingsArea = document.getElementById('bookingsArea');
+const bookingCount = document.getElementById('bookingCount');
+const userEmailEl = document.getElementById('userEmail');
+const logoutBtn = document.getElementById('logoutBtn');
+const refreshBtn = document.getElementById('refreshBtn');
 
-const {
-    data: { session },
-} = await supabase.auth.getSession();
-
-if (!session) {
-    window.location.replace("index.html");
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 }
 
-const logoutBtn = document.getElementById("logoutBtn");
+function formatDateTime(value) {
+    if (!value) return '—';
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return escapeHtml(value);
+    return d.toLocaleString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+    });
+}
 
-logoutBtn.addEventListener("click", async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-        console.error(error);
+function renderBookings(rows) {
+    if (!rows || rows.length === 0) {
+        bookingsArea.innerHTML = '<div class="state-msg">No bookings yet. New bookings from the site will show up here.</div>';
+        bookingCount.textContent = '';
         return;
     }
 
-    window.location.replace("index.html");
-});
+    bookingCount.textContent = rows.length + (rows.length === 1 ? ' booking' : ' bookings');
 
-// ---------- Bookings Section ----------
+    const rowsHtml = rows.map(b => `
+    <tr>
+      <td>${formatDateTime(b.date_time)}</td>
+      <td>${escapeHtml(b.name)}</td>
+      <td>${escapeHtml(b.phone)}</td>
+      <td>${escapeHtml(b.pickup_location)}</td>
+      <td>${escapeHtml(b.dropoff_location)}</td>
+      <td>${b.fare !== null && b.fare !== undefined ? '£' + escapeHtml(b.fare) : '—'}</td>
+      <td>${escapeHtml(b.notes) || '—'}</td>
+      <td><span class="badge">${formatDateTime(b.created_at)}</span></td>
+    </tr>
+  `).join('');
 
-const bookingsBody = document.getElementById("bookings-body");
-const newBookingBadge = document.getElementById("new-booking-badge");
+    bookingsArea.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Pickup date/time</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Pickup</th>
+          <th>Drop-off</th>
+          <th>Fare</th>
+          <th>Notes</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  `;
+}
 
-// Fetch all bookings, newest first
 async function loadBookings() {
-    const { data, error } = await supabase
-        .from("bookings")
-        .select("*")
-        .order("created_at", { ascending: false });
+    bookingsArea.innerHTML = '<div class="state-msg">Loading bookings...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
 
     if (error) {
-        console.error("Error loading bookings:", error);
-        bookingsBody.innerHTML = `<tr><td colspan="9">Failed to load bookings.</td></tr>`;
+        console.error('Error loading bookings:', error);
+        bookingsArea.innerHTML = `<div class="state-msg">Could not load bookings: ${escapeHtml(error.message)}</div>`;
+        bookingCount.textContent = '';
         return;
     }
 
     renderBookings(data);
 }
 
-// Render bookings into the table
-function renderBookings(bookings) {
-    if (!bookings || bookings.length === 0) {
-        bookingsBody.innerHTML = `<tr><td colspan="9">No bookings yet.</td></tr>`;
+async function initDashboard() {
+    const { data } = await supabaseClient.auth.getSession();
+
+    if (!data || !data.session) {
+        window.location.href = 'login.html';
         return;
     }
 
-    bookingsBody.innerHTML = "";
-
-    bookings.forEach((booking) => {
-        const row = document.createElement("tr");
-        row.setAttribute("data-id", booking.id);
-
-        const fareDisplay = booking.fare
-            ? `£${booking.fare}`
-            : `<input type="number" placeholder="Enter fare" style="width: 70px;" class="fare-input" />`;
-
-        row.innerHTML = `
-            <td>${new Date(booking.date_time).toLocaleString()}</td>
-            <td>${booking.name || ""}</td>
-            <td>${booking.phone || ""}</td>
-            <td>${booking.pickup_location || ""}</td>
-            <td>${booking.dropoff_location || ""}</td>
-            <td class="fare-cell">${fareDisplay}</td>
-            <td class="status-cell"><strong>${booking.status}</strong></td>
-            <td style="max-width: 200px; font-size: 12px;">${booking.notes || ""}</td>
-            <td>
-                <button class="accept-btn" ${booking.status !== "pending" ? "disabled" : ""}>Accept</button>
-                <button class="reject-btn" ${booking.status !== "pending" ? "disabled" : ""}>Reject</button>
-            </td>
-        `;
-
-        bookingsBody.appendChild(row);
-    });
-
-    attachActionListeners();
+    userEmailEl.textContent = data.session.user.email || 'Admin Dashboard';
+    loadBookings();
 }
 
-// Attach Accept/Reject button listeners
-function attachActionListeners() {
-    document.querySelectorAll(".accept-btn").forEach((btn) => {
-        btn.addEventListener("click", async (e) => {
-            const row = e.target.closest("tr");
-            const id = row.getAttribute("data-id");
-            await updateBookingStatus(id, "accepted", row);
-        });
-    });
+logoutBtn.addEventListener('click', async () => {
+    await supabaseClient.auth.signOut();
+    window.location.href = 'login.html';
+});
 
-    document.querySelectorAll(".reject-btn").forEach((btn) => {
-        btn.addEventListener("click", async (e) => {
-            const row = e.target.closest("tr");
-            const id = row.getAttribute("data-id");
-            await updateBookingStatus(id, "rejected", row);
-        });
-    });
-}
+refreshBtn.addEventListener('click', loadBookings);
 
-// Update booking status (and fare if manually entered)
-async function updateBookingStatus(id, newStatus, row) {
-    const updatePayload = { status: newStatus };
-
-    // If there's a manual fare input (fare was NULL), grab its value
-    const fareInput = row.querySelector(".fare-input");
-    if (fareInput && fareInput.value) {
-        updatePayload.fare = parseFloat(fareInput.value);
+// Redirect to login if the session ever ends (e.g. token expiry) while on this page
+supabaseClient.auth.onAuthStateChange((event) => {
+    if (event === 'SIGNED_OUT') {
+        window.location.href = 'login.html';
     }
+});
 
-    const { error } = await supabase
-        .from("bookings")
-        .update(updatePayload)
-        .eq("id", id);
-
-    if (error) {
-        console.error("Error updating booking:", error);
-        alert("Failed to update booking. Check console.");
-        return;
-    }
-
-    loadBookings(); // refresh table
-}
-
-// Initial load
-loadBookings();
-
-// ---------- Realtime: Show badge + auto-refresh when new booking arrives ----------
-supabase
-    .channel("bookings-changes")
-    .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "bookings" },
-        (payload) => {
-            newBookingBadge.style.display = "inline";
-            loadBookings();
-
-            // Hide badge after 5 seconds
-            setTimeout(() => {
-                newBookingBadge.style.display = "none";
-            }, 5000);
-        }
-    )
-    .subscribe();
+initDashboard();

@@ -1,17 +1,22 @@
 import supabase from "./supabase.js";
 
-const { data } = await supabase.auth.getSession();
+const {
+    data: { session },
+} = await supabase.auth.getSession();
 
-if (!data.session) {
-    window.location.href = "index.html";
+if (!session) {
+    window.location.replace("index.html");
 }
 
 const logoutBtn = document.getElementById("logoutBtn");
 
 logoutBtn.addEventListener("click", async () => {
+    const { error } = await supabase.auth.signOut();
 
-    await supabase.auth.signOut();
+    if (error) {
+        console.error(error);
+        return;
+    }
 
-    window.location.href = "index.html";
-
+    window.location.replace("index.html");
 });

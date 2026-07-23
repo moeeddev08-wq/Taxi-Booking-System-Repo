@@ -19,7 +19,7 @@ form.addEventListener("submit", async (e) => {
     }
 
 
-    window.location.href = "dashboard.html";
+    window.location.replace("dashboard.html");
     console.log(data);
 
 

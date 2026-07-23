@@ -17,6 +17,31 @@
 
     <button id="logoutBtn">Logout</button>
 
+    <hr>
+
+    <h2>Bookings <span id="new-booking-badge" style="display:none; color:red;">🔴 New!</span></h2>
+
+    <table id="bookings-table" border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Pickup</th>
+                <th>Dropoff</th>
+                <th>Fare</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="bookings-body">
+            <tr>
+                <td colspan="9">Loading bookings...</td>
+            </tr>
+        </tbody>
+    </table>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/dashboard.js"></script>
 

@@ -377,23 +377,28 @@ function initFareEstimator() {
         const pickupDateTime = `${dateVal}T${timeVal}:00`;
         const extraNotes = `Email: ${emailField ? emailField.value : ''} | Service: ${serviceType.options[serviceType.selectedIndex].text} | Passengers: ${passengerCount.value} | Luggage: ${luggageCount.value} | Message: ${messageField ? messageField.value : 'None'}`;
 
+        const bookingData = {
+            name: nameField ? nameField.value : '',
+            phone: phoneField ? phoneField.value : '',
+            pickup_location: pickupInput.value,
+            dropoff_location: dropoffInput.value,
+            date_time: pickupDateTime,
+            fare: calculatedFare,
+            notes: extraNotes,
+            status: "pending"
+        };
+
         supabaseClient
-            .from('bookings')
-            .insert([
-                {
-                    name: nameField ? nameField.value : '',
-                    phone: phoneField ? phoneField.value : '',
-                    pickup_location: pickupInput.value,
-                    dropoff_location: dropoffInput.value,
-                    date_time: pickupDateTime,
-                    fare: calculatedFare,
-                    notes: extraNotes
-                }
-            ])
-            .then(({ error }) => {
+            .from("bookings")
+            .insert([bookingData])
+            .then(({ data, error }) => {
                 if (error) {
-                    console.error('Supabase insert error:', error);
+                    console.error("❌ Supabase Error:", error);
+                    alert("Booking could not be saved. Please try again.");
+                    return;
                 }
+
+                console.log("✅ Booking Saved:", data);
             });
 
 

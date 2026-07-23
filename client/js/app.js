@@ -196,6 +196,34 @@ function initFareEstimator() {
     const passengerCount = document.getElementById('passenger-count');
     const luggageCount = document.getElementById('luggage-count');
 
+    // Fixed base prices (Standard Saloon rates) — matches booking.html pricing table
+    const routeBasePrices = {
+        'Heathrow': 85,
+        'Gatwick': 85,
+        'Luton': 170,
+        'Stansted': 190,
+        'London City': 150,
+        'Kings Cross': 140,
+        'South West London': 120,
+        'Oval': 120,
+        'Wimbledon': 90,
+        'Central London': 130
+    };
+
+    // Vehicle multipliers — derived from fleet.html mileage rates (£3.00 / £4.50 / £5.50 per mile)
+    const vehicleMultipliers = {
+        saloon: 1,
+        executive: 1.5,
+        mpv: 1.83
+    };
+
+    function calculateFare(routeName, vehicleClass) {
+        const basePrice = routeBasePrices[routeName];
+        if (!basePrice) return null; // custom/manual address — admin will confirm fare
+        const multiplier = vehicleMultipliers[vehicleClass] || 1;
+        return Math.round(basePrice * multiplier);
+    }
+
     // Modal elements
     const bookingModal = document.getElementById('booking-modal');
     const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -246,6 +274,7 @@ function initFareEstimator() {
         item.addEventListener('click', () => {
             const dest = item.getAttribute('data-destination') || item.getAttribute('data-route');
             pickupInput.value = 'Godalming, Surrey';
+            document.getElementById('selected-route').value = dest;
 
             const destinations = {
                 'Heathrow': 'Heathrow Airport, Hounslow',
@@ -340,6 +369,33 @@ function initFareEstimator() {
         }).catch((err) => {
             console.error('Booking submission failed to reach Google Sheet:', err);
         });
+        // Send booking data to Supabase Database
+        // Calculate fare based on selected route + vehicle type
+        const selectedRoute = document.getElementById('selected-route').value;
+        const calculatedFare = calculateFare(selectedRoute, vehicleType.value);
+
+        const pickupDateTime = `${dateVal}T${timeVal}:00`;
+        const extraNotes = `Email: ${emailField ? emailField.value : ''} | Service: ${serviceType.options[serviceType.selectedIndex].text} | Passengers: ${passengerCount.value} | Luggage: ${luggageCount.value} | Message: ${messageField ? messageField.value : 'None'}`;
+
+        supabaseClient
+            .from('bookings')
+            .insert([
+                {
+                    name: nameField ? nameField.value : '',
+                    phone: phoneField ? phoneField.value : '',
+                    pick_location: pickupInput.value,
+                    dropoff_location: dropoffInput.value,
+                    date_time: pickupDateTime,
+                    fare: calculatedFare,
+                    notes: extraNotes
+                }
+            ])
+            .then(({ error }) => {
+                if (error) {
+                    console.error('Supabase insert error:', error);
+                }
+            });
+
 
         // Slight delay so the loading state is visible, then open modal
         setTimeout(() => {

@@ -1386,6 +1386,8 @@ body.light-mode .theme-toggle-btn .icon-moon {
     padding: 40px;
     max-width: 500px;
     width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
     text-align: center;
     position: relative;
     border-color: var(--gold);
@@ -1822,6 +1824,11 @@ body.light-mode .theme-toggle-btn .icon-moon {
 
     .hero-title {
         font-size: 2.5rem;
+    }
+
+    .modal-card {
+        padding: 24px 20px;
+        max-height: 88vh;
     }
 
     .booking-card {

@@ -114,6 +114,22 @@ body {
     display: none;
 }
 
+/* ---------- Auth check overlay (hides dashboard until session verified) ---------- */
+.auth-check {
+    position: fixed;
+    inset: 0;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.auth-check-msg {
+    color: var(--muted);
+    font-size: 14px;
+}
+
 /* ---------- Dashboard shell with sidebar ---------- */
 .app-shell {
     display: flex;
@@ -227,7 +243,7 @@ body {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    color: var(--paper);
+    color: var(--ink);
 }
 
 .logout-btn:hover {

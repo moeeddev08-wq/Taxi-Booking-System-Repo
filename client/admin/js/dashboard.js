@@ -138,6 +138,10 @@ async function initDashboard() {
         return;
     }
 
+    // Session confirmed — now safe to reveal the dashboard
+    document.getElementById('authCheck').style.display = 'none';
+    document.getElementById('appShell').style.display = 'flex';
+
     userEmailEl.textContent = data.session.user.email || 'Admin Dashboard';
     loadBookings();
 }

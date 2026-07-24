@@ -393,3 +393,61 @@ tr:last-child td {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.price-edit {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.price-prefix {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.price-input {
+    width: 100px;
+    padding: 6px 8px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 13.5px;
+}
+
+.price-input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.save-price-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.save-price-btn:hover {
+    background: var(--accent-dark);
+}
+
+.save-price-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.save-status {
+    margin-left: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.save-status.success {
+    color: var(--accent-dark);
+}
+
+.save-status.error {
+    color: var(--danger);
+}

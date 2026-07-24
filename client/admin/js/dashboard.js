@@ -18,6 +18,10 @@ function showSection(sectionKey) {
 
     const activeBtn = document.querySelector(`.nav-item[data-section="${sectionKey}"]`);
     sectionTitle.textContent = activeBtn ? activeBtn.textContent.trim() : sectionKey;
+
+    if (sectionKey === 'prices') {
+        loadPrices();
+    }
 }
 
 navItems.forEach(btn => {
@@ -128,6 +132,102 @@ async function loadBookings() {
     }
 
     renderBookings(data);
+}
+
+// ---------- Prices section ----------
+const pricesArea = document.getElementById('pricesArea');
+
+async function loadPrices() {
+    pricesArea.innerHTML = '<div class="state-msg">Loading prices...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('prices')
+        .select('*')
+        .order('label', { ascending: true });
+
+    if (error) {
+        console.error('Error loading prices:', error);
+        pricesArea.innerHTML = `<div class="state-msg">Could not load prices: ${escapeHtml(error.message)}</div>`;
+        return;
+    }
+
+    renderPrices(data);
+}
+
+function renderPrices(rows) {
+    if (!rows || rows.length === 0) {
+        pricesArea.innerHTML = '<div class="state-msg">No prices set up yet. Add rows to the "prices" table in Supabase to get started.</div>';
+        return;
+    }
+
+    const rowsHtml = rows.map(p => `
+    <tr data-id="${escapeHtml(p.id)}">
+      <td>${escapeHtml(p.label)}</td>
+      <td>
+        <div class="price-edit">
+          <span class="price-prefix">£</span>
+          <input type="number" step="0.01" min="0" class="price-input" value="${escapeHtml(p.price)}">
+        </div>
+      </td>
+      <td>
+        <button class="save-price-btn" data-id="${escapeHtml(p.id)}">Save</button>
+        <span class="save-status" id="save-status-${escapeHtml(p.id)}"></span>
+      </td>
+    </tr>
+  `).join('');
+
+    pricesArea.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  `;
+
+    pricesArea.querySelectorAll('.save-price-btn').forEach(btn => {
+        btn.addEventListener('click', () => savePrice(btn.dataset.id, btn));
+    });
+}
+
+async function savePrice(id, btnEl) {
+    const row = btnEl.closest('tr');
+    const input = row.querySelector('.price-input');
+    const statusEl = document.getElementById(`save-status-${id}`);
+    const newValue = parseFloat(input.value);
+
+    if (isNaN(newValue) || newValue < 0) {
+        statusEl.textContent = 'Enter a valid price';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Saving...';
+    statusEl.textContent = '';
+
+    const { error } = await supabaseClient
+        .from('prices')
+        .update({ price: newValue, updated_at: new Date().toISOString() })
+        .eq('id', id);
+
+    btnEl.disabled = false;
+    btnEl.textContent = 'Save';
+
+    if (error) {
+        console.error('Error saving price:', error);
+        statusEl.textContent = 'Failed to save';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    statusEl.textContent = 'Saved ✓';
+    statusEl.className = 'save-status success';
+    setTimeout(() => { statusEl.textContent = ''; }, 2500);
 }
 
 async function initDashboard() {

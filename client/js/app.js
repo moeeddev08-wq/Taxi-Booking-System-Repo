@@ -55,7 +55,6 @@ function initScrollHeader() {
 
 
 // 7. Top Announcement Popup (shows once per browser session)
-// 7. Top Announcement Popup (center modal, blurred backdrop, shows once per session)
 function initAnnouncePopup() {
     const popup = document.getElementById('announce-popup');
     const backdrop = document.getElementById('announce-backdrop');
@@ -152,7 +151,6 @@ function switchFleetTab(vehicleClass) {
 }
 
 // Quick action: Select vehicle from Fleet Showcase and pre-fill form
-// Quick action: Select vehicle from Fleet Showcase and pre-fill form
 function selectFleetInForm(vehicleClass) {
     const vehicleSelector = document.getElementById('vehicle-type');
     const passengerSelector = document.getElementById('passenger-count');
@@ -196,18 +194,21 @@ function initFareEstimator() {
     const passengerCount = document.getElementById('passenger-count');
     const luggageCount = document.getElementById('luggage-count');
 
-    // Fixed base prices (Standard Saloon rates) — matches booking.html pricing table
-    const routeBasePrices = {
-        'Heathrow': 85,
-        'Gatwick': 85,
-        'Luton': 170,
-        'Stansted': 190,
-        'London City': 150,
-        'Kings Cross': 140,
-        'South West London': 120,
-        'Oval': 120,
-        'Wimbledon': 90,
-        'Central London': 130
+    // Populated dynamically from Supabase "prices" table — see loadPricesFromSupabase()
+    let routeBasePrices = {};
+
+    // Full address text used to pre-fill the dropoff field when a route is clicked
+    const destinations = {
+        'Heathrow': 'Heathrow Airport, Hounslow',
+        'Gatwick': 'Gatwick Airport, Horley',
+        'Luton': 'Luton Airport, Luton',
+        'Stansted': 'Stansted Airport, Stansted Mountfitchet',
+        'London City': 'London City Airport, Royal Docks',
+        'Kings Cross': 'St Pancras / Kings Cross Station, London',
+        'South West London': 'South West London, London',
+        'Oval': 'Lords / Oval Cricket Ground, London',
+        'Wimbledon': 'Wimbledon Stadium, London',
+        'Central London': 'Central London, London'
     };
 
     // Vehicle multipliers — derived from fleet.html mileage rates (£3.00 / £4.50 / £5.50 per mile)
@@ -223,6 +224,83 @@ function initFareEstimator() {
         const multiplier = vehicleMultipliers[vehicleClass] || 1;
         return Math.round(basePrice * multiplier);
     }
+
+    // ---------- Pricing table: fetch live prices from Supabase and render ----------
+    const pricingGrid = document.querySelector('.pricing-grid-list');
+
+    function attachRouteClickHandlers() {
+        const routeItems = document.querySelectorAll('.route-rate-item, .pricing-row');
+        routeItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const dest = item.getAttribute('data-destination') || item.getAttribute('data-route');
+                pickupInput.value = 'Godalming, Surrey';
+                document.getElementById('selected-route').value = dest;
+
+                if (destinations[dest]) {
+                    dropoffInput.value = destinations[dest];
+                }
+                serviceType.value = 'airport';
+
+                // Smooth scroll to form
+                pickupInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Pulse visual feedback
+                pickupInput.classList.add('pulse-highlight');
+                dropoffInput.classList.add('pulse-highlight');
+                setTimeout(() => {
+                    pickupInput.classList.remove('pulse-highlight');
+                    dropoffInput.classList.remove('pulse-highlight');
+                }, 1000);
+            });
+        });
+    }
+
+    function renderPricingTable(rows) {
+        if (!pricingGrid) return;
+
+        if (!rows || rows.length === 0) {
+            pricingGrid.innerHTML = '<p style="text-align:center; padding:20px;">Pricing is being updated — please call us for a quote.</p>';
+            return;
+        }
+
+        pricingGrid.innerHTML = rows.map(row => `
+            <div class="pricing-row" data-route="${row.destination}">
+                <span class="pricing-dest">${row.label}</span>
+                <span class="pricing-leader"></span>
+                <span class="pricing-badge">From £${row.price}</span>
+            </div>
+        `).join('');
+
+        attachRouteClickHandlers();
+    }
+
+    async function loadPricesFromSupabase() {
+        if (pricingGrid) {
+            pricingGrid.innerHTML = '<p style="text-align:center; padding:20px;">Loading current rates...</p>';
+        }
+
+        const { data, error } = await supabaseClient
+            .from('prices')
+            .select('*')
+            .order('label', { ascending: true });
+
+        if (error) {
+            console.error('Could not load prices:', error);
+            if (pricingGrid) {
+                pricingGrid.innerHTML = '<p style="text-align:center; padding:20px;">Rates unavailable right now — please call us for a quote.</p>';
+            }
+            return;
+        }
+
+        routeBasePrices = {};
+        data.forEach(row => {
+            routeBasePrices[row.destination] = row.price;
+        });
+
+        renderPricingTable(data);
+    }
+
+    loadPricesFromSupabase();
 
     // Modal elements
     const bookingModal = document.getElementById('booking-modal');
@@ -268,46 +346,6 @@ function initFareEstimator() {
         }
     }
 
-    // Make popular routes / pricing table rows pre-fill pickup & dropoff when clicked
-    const routeItems = document.querySelectorAll('.route-rate-item, .pricing-row');
-    routeItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const dest = item.getAttribute('data-destination') || item.getAttribute('data-route');
-            pickupInput.value = 'Godalming, Surrey';
-            document.getElementById('selected-route').value = dest;
-
-            const destinations = {
-                'Heathrow': 'Heathrow Airport, Hounslow',
-                'Gatwick': 'Gatwick Airport, Horley',
-                'Luton': 'Luton Airport, Luton',
-                'Stansted': 'Stansted Airport, Stansted Mountfitchet',
-                'London City': 'London City Airport, Royal Docks',
-                'Kings Cross': 'St Pancras / Kings Cross Station, London',
-                'South West London': 'South West London, London',
-                'Oval': 'Lords / Oval Cricket Ground, London',
-                'Wimbledon': 'Wimbledon Stadium, London',
-                'Central London': 'Central London, London'
-            };
-
-            if (destinations[dest]) {
-                dropoffInput.value = destinations[dest];
-            }
-            serviceType.value = 'airport';
-
-            // Smooth scroll to form
-            pickupInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-            // Pulse visual feedback
-            pickupInput.classList.add('pulse-highlight');
-            dropoffInput.classList.add('pulse-highlight');
-            setTimeout(() => {
-                pickupInput.classList.remove('pulse-highlight');
-                dropoffInput.classList.remove('pulse-highlight');
-            }, 1000);
-        });
-    });
-
-    // Handle Form Submission (Display Modal Popup — no fare shown, dispatch confirms pricing)
     // Handle Form Submission (Display Modal Popup — no fare shown, dispatch confirms pricing)
     const submitBtn = document.getElementById('btn-submit-booking');
     const submitBtnOriginalText = submitBtn ? submitBtn.textContent : '';
@@ -369,6 +407,7 @@ function initFareEstimator() {
         }).catch((err) => {
             console.error('Booking submission failed to reach Google Sheet:', err);
         });
+
         // Send booking data to Supabase Database
         // Calculate fare based on selected route + vehicle type
         const selectedRoute = document.getElementById('selected-route').value;

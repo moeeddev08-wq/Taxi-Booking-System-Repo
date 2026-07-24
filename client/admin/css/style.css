@@ -459,3 +459,61 @@ tr:last-child td {
 .save-status.error {
     color: var(--danger);
 }
+
+/* ============================================================
+   Fleet Admin Panel — append this to the END of your css/style.css
+   ============================================================ */
+.fleet-admin-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.fleet-admin-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.fleet-admin-card h3 {
+    margin: 0 0 14px;
+}
+
+.fleet-field {
+    margin-bottom: 12px;
+}
+
+.fleet-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.fleet-field input[type="text"],
+.fleet-field textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.fleet-field textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.fleet-field-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.fleet-field-row .fleet-field {
+    flex: 1;
+    min-width: 160px;
+}

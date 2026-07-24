@@ -211,12 +211,36 @@ function initFareEstimator() {
         'Central London': 'Central London, London'
     };
 
-    // Vehicle multipliers — derived from fleet.html mileage rates (£3.00 / £4.50 / £5.50 per mile)
-    const vehicleMultipliers = {
+    // Vehicle multipliers — now calculated dynamically from the "fleet" table's price_per_mile,
+    // relative to the Saloon rate. Owner changes price_per_mile in the dashboard → this updates
+    // automatically → every fare calculation reflects the new rate.
+    let vehicleMultipliers = {
         saloon: 1,
         executive: 1.5,
         mpv: 1.83
-    };
+    }; // fallback values, only used if the Supabase fetch below fails
+
+    async function loadVehicleMultipliers() {
+        const { data, error } = await supabaseClient
+            .from('fleet')
+            .select('vehicle_key, price_per_mile');
+
+        if (error || !data || data.length === 0) {
+            console.error('Could not load fleet rates, using fallback multipliers:', error);
+            return;
+        }
+
+        const saloonRow = data.find(row => row.vehicle_key === 'saloon');
+        const saloonRate = saloonRow ? Number(saloonRow.price_per_mile) : null;
+        if (!saloonRate) return;
+
+        const updated = {};
+        data.forEach(row => {
+            updated[row.vehicle_key] = Number(row.price_per_mile) / saloonRate;
+        });
+
+        vehicleMultipliers = updated;
+    }
 
     function calculateFare(routeName, vehicleClass) {
         const basePrice = routeBasePrices[routeName];
@@ -301,6 +325,7 @@ function initFareEstimator() {
     }
 
     loadPricesFromSupabase();
+    loadVehicleMultipliers();
 
     // Modal elements
     const bookingModal = document.getElementById('booking-modal');

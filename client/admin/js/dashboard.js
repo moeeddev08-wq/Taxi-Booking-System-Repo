@@ -22,6 +22,10 @@ function showSection(sectionKey) {
     if (sectionKey === 'prices') {
         loadPrices();
     }
+
+    if (sectionKey === 'fleet') {
+        loadFleet();
+    }
 }
 
 navItems.forEach(btn => {
@@ -228,6 +232,159 @@ async function savePrice(id, btnEl) {
     statusEl.textContent = 'Saved ✓';
     statusEl.className = 'save-status success';
     setTimeout(() => { statusEl.textContent = ''; }, 2500);
+}
+
+// ---------- Fleet section ----------
+const fleetArea = document.getElementById('fleetArea');
+
+async function loadFleet() {
+    fleetArea.innerHTML = '<div class="state-msg">Loading fleet...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('fleet')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+    if (error) {
+        console.error('Error loading fleet:', error);
+        fleetArea.innerHTML = `<div class="state-msg">Could not load fleet: ${escapeHtml(error.message)}</div>`;
+        return;
+    }
+
+    renderFleet(data);
+}
+
+function renderFleet(rows) {
+    if (!rows || rows.length === 0) {
+        fleetArea.innerHTML = '<div class="state-msg">No fleet vehicles found. Add rows to the "fleet" table in Supabase to get started.</div>';
+        return;
+    }
+
+    const cardsHtml = rows.map(v => `
+    <div class="fleet-admin-card" data-id="${escapeHtml(v.id)}">
+      <h3>${escapeHtml(v.title)}</h3>
+
+      <div class="fleet-field">
+        <label>Title</label>
+        <input type="text" class="fleet-title-input" value="${escapeHtml(v.title)}">
+      </div>
+
+      <div class="fleet-field">
+        <label>Subtitle</label>
+        <input type="text" class="fleet-subtitle-input" value="${escapeHtml(v.subtitle)}">
+      </div>
+
+      <div class="fleet-field">
+        <label>Description</label>
+        <textarea class="fleet-desc-input">${escapeHtml(v.description)}</textarea>
+      </div>
+
+      <div class="fleet-field-row">
+        <div class="fleet-field">
+          <label>Passengers text</label>
+          <input type="text" class="fleet-passengers-input" value="${escapeHtml(v.passengers_text)}">
+        </div>
+        <div class="fleet-field">
+          <label>Luggage text</label>
+          <input type="text" class="fleet-luggage-input" value="${escapeHtml(v.luggage_text)}">
+        </div>
+      </div>
+
+      <div class="fleet-field-row">
+        <div class="fleet-field">
+          <label>Feature 3</label>
+          <input type="text" class="fleet-spec3-input" value="${escapeHtml(v.spec3_text)}">
+        </div>
+        <div class="fleet-field">
+          <label>Feature 4</label>
+          <input type="text" class="fleet-spec4-input" value="${escapeHtml(v.spec4_text)}">
+        </div>
+      </div>
+
+      <div class="fleet-field-row">
+        <div class="fleet-field">
+          <label>Price per mile (£)</label>
+          <div class="price-edit">
+            <span class="price-prefix">£</span>
+            <input type="number" step="0.01" min="0" class="price-input fleet-rate-input" value="${escapeHtml(v.price_per_mile)}">
+          </div>
+        </div>
+        <div class="fleet-field">
+          <label>Minimum fare (£)</label>
+          <div class="price-edit">
+            <span class="price-prefix">£</span>
+            <input type="number" step="0.01" min="0" class="price-input fleet-minfare-input" value="${escapeHtml(v.minimum_fare)}">
+          </div>
+        </div>
+      </div>
+
+      <button class="save-price-btn save-fleet-btn" data-id="${escapeHtml(v.id)}">Save</button>
+      <span class="save-status" id="save-fleet-status-${escapeHtml(v.id)}"></span>
+    </div>
+  `).join('');
+
+    fleetArea.innerHTML = `<div class="fleet-admin-grid">${cardsHtml}</div>`;
+
+    fleetArea.querySelectorAll('.save-fleet-btn').forEach(btn => {
+        btn.addEventListener('click', () => saveFleet(btn.dataset.id, btn));
+    });
+}
+
+async function saveFleet(id, btnEl) {
+    const card = btnEl.closest('.fleet-admin-card');
+    const statusEl = document.getElementById(`save-fleet-status-${id}`);
+
+    const title = card.querySelector('.fleet-title-input').value.trim();
+    const subtitle = card.querySelector('.fleet-subtitle-input').value.trim();
+    const description = card.querySelector('.fleet-desc-input').value.trim();
+    const passengers_text = card.querySelector('.fleet-passengers-input').value.trim();
+    const luggage_text = card.querySelector('.fleet-luggage-input').value.trim();
+    const spec3_text = card.querySelector('.fleet-spec3-input').value.trim();
+    const spec4_text = card.querySelector('.fleet-spec4-input').value.trim();
+    const price_per_mile = parseFloat(card.querySelector('.fleet-rate-input').value);
+    const minimum_fare = parseFloat(card.querySelector('.fleet-minfare-input').value);
+
+    if (!title || !subtitle || !description) {
+        statusEl.textContent = 'Title, subtitle & description required';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    if (isNaN(price_per_mile) || price_per_mile < 0 || isNaN(minimum_fare) || minimum_fare < 0) {
+        statusEl.textContent = 'Enter valid prices';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Saving...';
+    statusEl.textContent = '';
+
+    const { error } = await supabaseClient
+        .from('fleet')
+        .update({
+            title, subtitle, description,
+            passengers_text, luggage_text, spec3_text, spec4_text,
+            price_per_mile, minimum_fare,
+            updated_at: new Date().toISOString()
+        })
+        .eq('id', id);
+
+    btnEl.disabled = false;
+    btnEl.textContent = 'Save';
+
+    if (error) {
+        console.error('Error saving fleet vehicle:', error);
+        statusEl.textContent = 'Failed to save';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    statusEl.textContent = 'Saved ✓';
+    statusEl.className = 'save-status success';
+    setTimeout(() => { statusEl.textContent = ''; }, 2500);
+
+    card.querySelector('h3').textContent = title;
 }
 
 async function initDashboard() {

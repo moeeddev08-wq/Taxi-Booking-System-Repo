@@ -267,9 +267,11 @@ main {
     .sidebar {
         width: 100%;
         flex-direction: row;
-        flex-wrap: wrap;
         align-items: center;
-        padding: 12px;
+        padding: 10px 12px;
+        gap: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .sidebar-brand {
@@ -278,16 +280,22 @@ main {
 
     .sidebar-nav {
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        flex: none;
+        gap: 6px;
     }
 
     .nav-item {
         width: auto;
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 8px 12px;
     }
 
     .sidebar-logout {
         margin-top: 0;
-        margin-left: auto;
+        flex-shrink: 0;
+        white-space: nowrap;
     }
 }
 
@@ -312,7 +320,7 @@ main {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    overflow: hidden;
+    overflow-x: auto;
 }
 
 table {

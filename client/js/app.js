@@ -383,6 +383,10 @@ function initFareEstimator() {
 
         document.getElementById('modal-vehicle').textContent = vehicleType.options[vehicleType.selectedIndex].text;
 
+        // Calculate fare based on selected route + vehicle type (needed for both Google Sheet and Supabase)
+        const selectedRoute = document.getElementById('selected-route').value;
+        const calculatedFare = calculateFare(selectedRoute, vehicleType.value);
+
         // Send booking data to Google Sheet
         const nameField = document.getElementById('customer-name');
         const phoneField = document.getElementById('customer-phone');
@@ -402,17 +406,14 @@ function initFareEstimator() {
                 passengers: passengerCount.value,
                 luggage: luggageCount.value,
                 message: sanitizeForSheet(messageField ? messageField.value : ''),
-                bookingCode: bookingCode
+                bookingCode: bookingCode,
+                fare: calculatedFare !== null ? calculatedFare : 'To be confirmed'
             })
         }).catch((err) => {
             console.error('Booking submission failed to reach Google Sheet:', err);
         });
 
         // Send booking data to Supabase Database
-        // Calculate fare based on selected route + vehicle type
-        const selectedRoute = document.getElementById('selected-route').value;
-        const calculatedFare = calculateFare(selectedRoute, vehicleType.value);
-
         const pickupDateTime = `${dateVal}T${timeVal}:00`;
         const extraNotes = `Email: ${emailField ? emailField.value : ''} | Service: ${serviceType.options[serviceType.selectedIndex].text} | Passengers: ${passengerCount.value} | Luggage: ${luggageCount.value} | Message: ${messageField ? messageField.value : 'None'}`;
 

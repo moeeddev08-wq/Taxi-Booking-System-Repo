@@ -26,6 +26,10 @@ function showSection(sectionKey) {
     if (sectionKey === 'fleet') {
         loadFleet();
     }
+
+    if (sectionKey === 'testimonials') {
+        loadReviews();
+    }
 }
 
 navItems.forEach(btn => {
@@ -385,6 +389,136 @@ async function saveFleet(id, btnEl) {
     setTimeout(() => { statusEl.textContent = ''; }, 2500);
 
     card.querySelector('h3').textContent = title;
+}
+
+// ---------- Reviews section (moderation) ----------
+const pendingReviewsArea = document.getElementById('pendingReviewsArea');
+const approvedReviewsArea = document.getElementById('approvedReviewsArea');
+
+function starsHtmlAdmin(rating) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+        html += i <= rating ? '★' : '☆';
+    }
+    return html;
+}
+
+async function loadReviews() {
+    pendingReviewsArea.innerHTML = '<div class="state-msg">Loading pending reviews...</div>';
+    approvedReviewsArea.innerHTML = '<div class="state-msg">Loading approved reviews...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('site_reviews')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error loading reviews:', error);
+        pendingReviewsArea.innerHTML = `<div class="state-msg">Could not load reviews: ${escapeHtml(error.message)}</div>`;
+        approvedReviewsArea.innerHTML = '';
+        return;
+    }
+
+    const pending = data.filter(r => r.status === 'pending');
+    const approved = data.filter(r => r.status === 'approved');
+
+    renderPendingReviews(pending);
+    renderApprovedReviews(approved);
+}
+
+function renderPendingReviews(rows) {
+    if (!rows || rows.length === 0) {
+        pendingReviewsArea.innerHTML = '<div class="state-msg">No reviews waiting for approval.</div>';
+        return;
+    }
+
+    pendingReviewsArea.innerHTML = rows.map(r => `
+    <div class="review-admin-card" data-id="${escapeHtml(r.id)}">
+      <div class="review-admin-head">
+        <strong>${escapeHtml(r.name)}</strong>
+        <span class="review-admin-stars">${starsHtmlAdmin(r.rating)}</span>
+        <span class="badge">${formatDateTime(r.created_at)}</span>
+      </div>
+      <p class="review-admin-message">${escapeHtml(r.message)}</p>
+      <div class="review-admin-actions">
+        <button class="approve-review-btn" data-id="${escapeHtml(r.id)}">Approve</button>
+        <button class="reject-review-btn" data-id="${escapeHtml(r.id)}">Reject</button>
+      </div>
+    </div>
+  `).join('');
+
+    pendingReviewsArea.querySelectorAll('.approve-review-btn').forEach(btn => {
+        btn.addEventListener('click', () => setReviewStatus(btn.dataset.id, 'approved', btn));
+    });
+    pendingReviewsArea.querySelectorAll('.reject-review-btn').forEach(btn => {
+        btn.addEventListener('click', () => setReviewStatus(btn.dataset.id, 'rejected', btn));
+    });
+}
+
+function renderApprovedReviews(rows) {
+    if (!rows || rows.length === 0) {
+        approvedReviewsArea.innerHTML = '<div class="state-msg">No approved reviews yet.</div>';
+        return;
+    }
+
+    approvedReviewsArea.innerHTML = rows.map(r => `
+    <div class="review-admin-card" data-id="${escapeHtml(r.id)}">
+      <div class="review-admin-head">
+        <strong>${escapeHtml(r.name)}</strong>
+        <span class="review-admin-stars">${starsHtmlAdmin(r.rating)}</span>
+        <span class="badge">${formatDateTime(r.created_at)}</span>
+      </div>
+      <p class="review-admin-message">${escapeHtml(r.message)}</p>
+      <div class="review-admin-actions">
+        <button class="delete-review-btn" data-id="${escapeHtml(r.id)}">Remove from site</button>
+      </div>
+    </div>
+  `).join('');
+
+    approvedReviewsArea.querySelectorAll('.delete-review-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteReview(btn.dataset.id, btn));
+    });
+}
+
+async function setReviewStatus(id, status, btnEl) {
+    btnEl.disabled = true;
+
+    const { error } = await supabaseClient
+        .from('site_reviews')
+        .update({ status })
+        .eq('id', id);
+
+    if (error) {
+        console.error('Error updating review status:', error);
+        alert('Could not update this review: ' + error.message);
+        btnEl.disabled = false;
+        return;
+    }
+
+    loadReviews();
+}
+
+async function deleteReview(id, btnEl) {
+    const confirmed = window.confirm('Remove this review from the website? This cannot be undone.');
+    if (!confirmed) return;
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Removing...';
+
+    const { error } = await supabaseClient
+        .from('site_reviews')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        console.error('Error deleting review:', error);
+        alert('Could not remove review: ' + error.message);
+        btnEl.disabled = false;
+        btnEl.textContent = 'Remove from site';
+        return;
+    }
+
+    loadReviews();
 }
 
 async function initDashboard() {

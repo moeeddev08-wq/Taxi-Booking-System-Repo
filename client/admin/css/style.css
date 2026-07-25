@@ -517,3 +517,137 @@ tr:last-child td {
     flex: 1;
     min-width: 160px;
 }
+
+/* ============================================================
+   FLEET ADMIN PANEL — append to admin's css/style.css
+   ============================================================ */
+.fleet-admin-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.fleet-admin-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.fleet-admin-card h3 {
+    margin: 0 0 14px;
+}
+
+.fleet-field {
+    margin-bottom: 12px;
+}
+
+.fleet-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.fleet-field input[type="text"],
+.fleet-field textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.fleet-field textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.fleet-field-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.fleet-field-row .fleet-field {
+    flex: 1;
+    min-width: 160px;
+}
+
+/* ============================================================
+   REVIEWS ADMIN PANEL (moderation) — append to admin's css/style.css
+   ============================================================ */
+.subsection-title {
+    font-size: 1.1rem;
+    margin: 0 0 16px;
+}
+
+.review-admin-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.review-admin-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.review-admin-stars {
+    color: #e0a500;
+    letter-spacing: 2px;
+}
+
+.review-admin-message {
+    margin: 0 0 12px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.review-admin-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.approve-review-btn {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.reject-review-btn {
+    background: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.delete-review-btn {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.approve-review-btn:disabled,
+.reject-review-btn:disabled,
+.delete-review-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

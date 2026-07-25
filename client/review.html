@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews | Wizz Cars Godalming</title>
+    <meta name="description"
+        content="Read what our customers say about Wizz Cars Godalming, and share your own experience with our taxi and chauffeur service.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Sticky Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" id="header-logo">
+                <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                        class="logo-cars">Cars</span></span>
+                <span class="logo-sub">GODALMING</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="fleet.html" class="nav-link">Our Fleet</a></li>
+                    <li><a href="booking.html" class="nav-link">Booking</a></li>
+                    <li><a href="reviews.html" class="nav-link active">Reviews</a></li>
+                    <li><a href="faqs.html" class="nav-link">FAQs</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="tel:00447833814223" class="phone-btn" id="header-phone-btn" title="Call Us">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>00447833814223</span>
+                </a>
+                <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+                    target="_blank" rel="noopener" class="header-whatsapp-btn" id="header-whatsapp-btn"
+                    title="WhatsApp Chat">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Reviews Section -->
+        <section class="fleet-section" id="reviews" style="padding-top: 180px;">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge">Customer Reviews</div>
+                    <h2>What Our Customers Say</h2>
+                    <p>Real feedback from real passengers — straight from Google and from riders on our own site.
+                    </p>
+                </div>
+
+                <!-- Google Reviews Block -->
+                <div class="reviews-block">
+                    <h3 class="reviews-block-title"><i class="fa-brands fa-google"></i> Google Reviews</h3>
+                    <div id="google-reviews-list" class="reviews-grid">
+                        <div class="state-msg">Loading Google reviews...</div>
+                    </div>
+                </div>
+
+                <!-- Site Reviews Block -->
+                <div class="reviews-block">
+                    <h3 class="reviews-block-title"><i class="fa-solid fa-comments"></i> Reviews From Our Website
+                    </h3>
+                    <div id="site-reviews-list" class="reviews-grid">
+                        <div class="state-msg">Loading reviews...</div>
+                    </div>
+                </div>
+
+                <!-- Submit a Review Form -->
+                <div class="reviews-block">
+                    <h3 class="reviews-block-title"><i class="fa-solid fa-pen"></i> Share Your Experience</h3>
+                    <form id="review-form" class="review-form">
+                        <!-- Honeypot spam field -->
+                        <input type="text" id="review-website" name="website" style="display:none;" tabindex="-1"
+                            autocomplete="off">
+
+                        <div class="form-group">
+                            <label for="review-name">Your Name</label>
+                            <input type="text" id="review-name" required maxlength="80">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your Rating</label>
+                            <div class="star-rating" id="star-rating">
+                                <i class="fa-solid fa-star star-input" data-value="1"></i>
+                                <i class="fa-solid fa-star star-input" data-value="2"></i>
+                                <i class="fa-solid fa-star star-input" data-value="3"></i>
+                                <i class="fa-solid fa-star star-input" data-value="4"></i>
+                                <i class="fa-solid fa-star star-input" data-value="5"></i>
+                            </div>
+                            <input type="hidden" id="review-rating" value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="review-message">Your Review</label>
+                            <textarea id="review-message" rows="4" required maxlength="600"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="review-submit-btn">Submit Review</button>
+                        <p class="review-form-note">Reviews are checked before they appear publicly, so yours may
+                            take a little time to show up.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-wordmark"><span class="logo-wizz">Wizz</span><span
+                            class="logo-cars">Cars</span></span>
+                    <span class="logo-sub">GODALMING</span>
+                </a>
+                <p>Providing premium taxi, chauffeur, and airport transfer services throughout Godalming and Surrey
+                    villages. Reliable, clean, and professional 24/7 travel.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="booking.html">Booking & Pricing</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="faqs.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-coverage">
+                <h4>Coverage Areas</h4>
+                <ul>
+                    <li>Godalming & Town Centre</li>
+                    <li>Milford, Witley & Hambledon</li>
+                    <li>Chiddingfold & Haslemere</li>
+                    <li>Bramley, Wonersh & Shamley Green</li>
+                    <li>Guildford & surrounding villages</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Wizz Cars Godalming. All Rights Reserved. Private Hire Operators Licensed in Surrey.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact">
+        <a href="tel:00447833814223" class="float-btn float-phone" aria-label="Call Us">
+            <i class="fa-solid fa-phone"></i>
+            <span class="float-label">Call Us Now</span>
+        </a>
+        <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="float-label">Let's Chat</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/reviews-loader.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

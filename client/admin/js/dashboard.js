@@ -30,6 +30,14 @@ function showSection(sectionKey) {
     if (sectionKey === 'testimonials') {
         loadReviews();
     }
+
+    if (sectionKey === 'faqs') {
+        loadFaqs();
+    }
+
+    if (sectionKey === 'contact') {
+        loadContactSettings();
+    }
 }
 
 navItems.forEach(btn => {
@@ -519,6 +527,259 @@ async function deleteReview(id, btnEl) {
     }
 
     loadReviews();
+}
+
+// ---------- FAQs section ----------
+const faqsArea = document.getElementById('faqsArea');
+
+async function loadFaqs() {
+    faqsArea.innerHTML = '<div class="state-msg">Loading FAQs...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('faqs')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+    if (error) {
+        console.error('Error loading FAQs:', error);
+        faqsArea.innerHTML = `<div class="state-msg">Could not load FAQs: ${escapeHtml(error.message)}</div>`;
+        return;
+    }
+
+    renderFaqs(data);
+}
+
+function renderFaqs(rows) {
+    if (!rows || rows.length === 0) {
+        faqsArea.innerHTML = '<div class="state-msg">No FAQs yet. Add one above to get started.</div>';
+        return;
+    }
+
+    faqsArea.innerHTML = rows.map(f => `
+    <div class="faq-admin-card" data-id="${escapeHtml(f.id)}">
+      <div class="fleet-field">
+        <label>Category</label>
+        <input type="text" class="faq-category-input" value="${escapeHtml(f.category)}">
+      </div>
+      <div class="fleet-field">
+        <label>Question</label>
+        <input type="text" class="faq-question-input" value="${escapeHtml(f.question)}">
+      </div>
+      <div class="fleet-field">
+        <label>Answer</label>
+        <textarea class="faq-answer-input">${escapeHtml(f.answer)}</textarea>
+      </div>
+      <div class="review-admin-actions">
+        <button class="save-price-btn save-faq-btn" data-id="${escapeHtml(f.id)}">Save</button>
+        <button class="delete-review-btn delete-faq-btn" data-id="${escapeHtml(f.id)}">Delete</button>
+        <span class="save-status" id="save-faq-status-${escapeHtml(f.id)}"></span>
+      </div>
+    </div>
+  `).join('');
+
+    faqsArea.querySelectorAll('.save-faq-btn').forEach(btn => {
+        btn.addEventListener('click', () => saveFaq(btn.dataset.id, btn));
+    });
+    faqsArea.querySelectorAll('.delete-faq-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteFaq(btn.dataset.id, btn));
+    });
+}
+
+async function saveFaq(id, btnEl) {
+    const card = btnEl.closest('.faq-admin-card');
+    const statusEl = document.getElementById(`save-faq-status-${id}`);
+
+    const category = card.querySelector('.faq-category-input').value.trim();
+    const question = card.querySelector('.faq-question-input').value.trim();
+    const answer = card.querySelector('.faq-answer-input').value.trim();
+
+    if (!category || !question || !answer) {
+        statusEl.textContent = 'All fields required';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Saving...';
+    statusEl.textContent = '';
+
+    const { error } = await supabaseClient
+        .from('faqs')
+        .update({ category, question, answer, updated_at: new Date().toISOString() })
+        .eq('id', id);
+
+    btnEl.disabled = false;
+    btnEl.textContent = 'Save';
+
+    if (error) {
+        console.error('Error saving FAQ:', error);
+        statusEl.textContent = 'Failed to save';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    statusEl.textContent = 'Saved ✓';
+    statusEl.className = 'save-status success';
+    setTimeout(() => { statusEl.textContent = ''; }, 2500);
+}
+
+async function deleteFaq(id, btnEl) {
+    const confirmed = window.confirm('Delete this FAQ? This cannot be undone.');
+    if (!confirmed) return;
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Deleting...';
+
+    const { error } = await supabaseClient
+        .from('faqs')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        console.error('Error deleting FAQ:', error);
+        alert('Could not delete FAQ: ' + error.message);
+        btnEl.disabled = false;
+        btnEl.textContent = 'Delete';
+        return;
+    }
+
+    loadFaqs();
+}
+
+const addFaqBtn = document.getElementById('addFaqBtn');
+if (addFaqBtn) {
+    addFaqBtn.addEventListener('click', async () => {
+        const statusEl = document.getElementById('addFaqStatus');
+        const categoryInput = document.getElementById('newFaqCategory');
+        const questionInput = document.getElementById('newFaqQuestion');
+        const answerInput = document.getElementById('newFaqAnswer');
+
+        const category = categoryInput.value.trim();
+        const question = questionInput.value.trim();
+        const answer = answerInput.value.trim();
+
+        if (!category || !question || !answer) {
+            statusEl.textContent = 'All fields required';
+            statusEl.className = 'save-status error';
+            return;
+        }
+
+        addFaqBtn.disabled = true;
+        addFaqBtn.textContent = 'Adding...';
+
+        const { error } = await supabaseClient
+            .from('faqs')
+            .insert([{ category, question, answer, display_order: 999 }]);
+
+        addFaqBtn.disabled = false;
+        addFaqBtn.textContent = 'Add FAQ';
+
+        if (error) {
+            console.error('Error adding FAQ:', error);
+            statusEl.textContent = 'Failed to add';
+            statusEl.className = 'save-status error';
+            return;
+        }
+
+        categoryInput.value = '';
+        questionInput.value = '';
+        answerInput.value = '';
+        statusEl.textContent = 'Added ✓';
+        statusEl.className = 'save-status success';
+        setTimeout(() => { statusEl.textContent = ''; }, 2500);
+
+        loadFaqs();
+    });
+}
+
+// ---------- Contact Details / Site Settings section ----------
+const contactSettingsArea = document.getElementById('contactSettingsArea');
+
+async function loadContactSettings() {
+    contactSettingsArea.innerHTML = '<div class="state-msg">Loading contact settings...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('site_settings')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+    if (error || !data) {
+        console.error('Error loading contact settings:', error);
+        contactSettingsArea.innerHTML = `<div class="state-msg">Could not load contact settings: ${escapeHtml(error ? error.message : 'no data')}</div>`;
+        return;
+    }
+
+    renderContactSettings(data);
+}
+
+function renderContactSettings(s) {
+    contactSettingsArea.innerHTML = `
+    <div class="fleet-field">
+      <label>Phone Number (digits only, e.g. 00447833814223)</label>
+      <input type="text" id="settingPhone" value="${escapeHtml(s.phone_number)}">
+    </div>
+    <div class="fleet-field">
+      <label>WhatsApp Number (digits only, no leading 00, e.g. 447833814223)</label>
+      <input type="text" id="settingWhatsappNumber" value="${escapeHtml(s.whatsapp_number)}">
+    </div>
+    <div class="fleet-field">
+      <label>WhatsApp Pre-filled Message</label>
+      <textarea id="settingWhatsappMessage">${escapeHtml(s.whatsapp_message)}</textarea>
+    </div>
+    <div class="fleet-field">
+      <label>Email Address</label>
+      <input type="text" id="settingEmail" value="${escapeHtml(s.email)}">
+    </div>
+    <div class="fleet-field">
+      <label>Office Hours Text</label>
+      <input type="text" id="settingHours" value="${escapeHtml(s.office_hours)}">
+    </div>
+    <button class="save-price-btn" id="saveContactSettingsBtn">Save Changes</button>
+    <span class="save-status" id="saveContactSettingsStatus"></span>
+  `;
+
+    document.getElementById('saveContactSettingsBtn').addEventListener('click', saveContactSettings);
+}
+
+async function saveContactSettings() {
+    const statusEl = document.getElementById('saveContactSettingsStatus');
+    const btnEl = document.getElementById('saveContactSettingsBtn');
+
+    const phone_number = document.getElementById('settingPhone').value.trim();
+    const whatsapp_number = document.getElementById('settingWhatsappNumber').value.trim();
+    const whatsapp_message = document.getElementById('settingWhatsappMessage').value.trim();
+    const email = document.getElementById('settingEmail').value.trim();
+    const office_hours = document.getElementById('settingHours').value.trim();
+
+    if (!phone_number || !whatsapp_number || !whatsapp_message || !email || !office_hours) {
+        statusEl.textContent = 'All fields required';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Saving...';
+    statusEl.textContent = '';
+
+    const { error } = await supabaseClient
+        .from('site_settings')
+        .update({ phone_number, whatsapp_number, whatsapp_message, email, office_hours })
+        .eq('id', 1);
+
+    btnEl.disabled = false;
+    btnEl.textContent = 'Save Changes';
+
+    if (error) {
+        console.error('Error saving contact settings:', error);
+        statusEl.textContent = 'Failed to save';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    statusEl.textContent = 'Saved ✓ (updates everywhere on the site)';
+    statusEl.className = 'save-status success';
+    setTimeout(() => { statusEl.textContent = ''; }, 3500);
 }
 
 async function initDashboard() {

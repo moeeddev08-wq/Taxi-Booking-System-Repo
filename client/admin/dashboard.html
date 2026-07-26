@@ -30,9 +30,6 @@
                 <button class="nav-item" data-section="fleet">
                     <span class="nav-icon">🚗</span> Fleet
                 </button>
-                <button class="nav-item" data-section="services">
-                    <span class="nav-icon">🛠️</span> Services
-                </button>
                 <button class="nav-item" data-section="testimonials">
                     <span class="nav-icon">⭐</span> Reviews
                 </button>
@@ -41,9 +38,6 @@
                 </button>
                 <button class="nav-item" data-section="contact">
                     <span class="nav-icon">📞</span> Contact Details
-                </button>
-                <button class="nav-item" data-section="gallery">
-                    <span class="nav-icon">🖼️</span> Logo &amp; Gallery
                 </button>
                 <button class="nav-item" data-section="settings">
                     <span class="nav-icon">⚙️</span> Settings
@@ -105,16 +99,6 @@
                     </div>
                 </section>
 
-                <!-- PLACEHOLDER: Services -->
-                <section class="panel" id="section-services" hidden>
-                    <div class="section-head">
-                        <h1>Services</h1>
-                    </div>
-                    <div class="card">
-                        <div class="state-msg">Coming in Phase 4 — manage your service list here.</div>
-                    </div>
-                </section>
-
                 <!-- REVIEWS SECTION (live/working) -->
                 <section class="panel" id="section-testimonials" hidden>
                     <div class="section-head">
@@ -137,33 +121,51 @@
                     </div>
                 </section>
 
-                <!-- PLACEHOLDER: FAQs -->
+                <!-- FAQS SECTION (live/working) -->
                 <section class="panel" id="section-faqs" hidden>
                     <div class="section-head">
                         <h1>FAQs</h1>
+                        <span class="count">Edit, add, or remove questions and answers.</span>
                     </div>
+
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 6 — manage FAQs here.</div>
+                        <h2 class="subsection-title">Add a New FAQ</h2>
+                        <div class="faq-admin-add-form">
+                            <div class="fleet-field">
+                                <label>Category</label>
+                                <input type="text" id="newFaqCategory" placeholder="e.g. Booking &amp; Pricing">
+                            </div>
+                            <div class="fleet-field">
+                                <label>Question</label>
+                                <input type="text" id="newFaqQuestion" placeholder="e.g. How do I book a journey?">
+                            </div>
+                            <div class="fleet-field">
+                                <label>Answer</label>
+                                <textarea id="newFaqAnswer" placeholder="Write the answer here..."></textarea>
+                            </div>
+                            <button class="save-price-btn" id="addFaqBtn">Add FAQ</button>
+                            <span class="save-status" id="addFaqStatus"></span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="subsection-title">Existing FAQs</h2>
+                        <div id="faqsArea">
+                            <div class="state-msg">Loading FAQs...</div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- PLACEHOLDER: Contact -->
+                <!-- CONTACT DETAILS SECTION (live/working) -->
                 <section class="panel" id="section-contact" hidden>
                     <div class="section-head">
                         <h1>Contact Details</h1>
+                        <span class="count">Updates here apply across every page of the website.</span>
                     </div>
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 7 — edit phone, email, address & WhatsApp here.</div>
-                    </div>
-                </section>
-
-                <!-- PLACEHOLDER: Gallery -->
-                <section class="panel" id="section-gallery" hidden>
-                    <div class="section-head">
-                        <h1>Logo &amp; Gallery</h1>
-                    </div>
-                    <div class="card">
-                        <div class="state-msg">Coming in Phase 8 — upload logo & gallery images here.</div>
+                        <div id="contactSettingsArea">
+                            <div class="state-msg">Loading contact settings...</div>
+                        </div>
                     </div>
                 </section>
 
@@ -173,7 +175,8 @@
                         <h1>Settings</h1>
                     </div>
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 9 — final settings & polish.</div>
+                        <div class="state-msg">Coming soon — admin login management, announcement popup control, and
+                            other site-wide toggles will live here.</div>
                     </div>
                 </section>
 

@@ -107,7 +107,7 @@
                                 <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
                                 <div class="info-content">
                                     <span>Phone Number</span>
-                                    <a href="tel:00447833814223">00447833814223</a>
+                                    <a href="tel:00447833814223" id="contact-phone-link">00447833814223</a>
                                 </div>
                             </div>
 
@@ -115,7 +115,8 @@
                                 <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
                                 <div class="info-content">
                                     <span>Email Address</span>
-                                    <a href="mailto:wizzcarsgodalming@gmail.com">wizzcarsgodalming@gmail.com</a>
+                                    <a href="mailto:wizzcarsgodalming@gmail.com"
+                                        id="contact-email-link">wizzcarsgodalming@gmail.com</a>
                                 </div>
                             </div>
 
@@ -123,7 +124,7 @@
                                 <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
                                 <div class="info-content">
                                     <span>Office Hours</span>
-                                    <span>24/7 Telephone Dispatch Available</span>
+                                    <span id="contact-hours-text">24/7 Telephone Dispatch Available</span>
                                 </div>
                             </div>
                         </div>
@@ -197,18 +198,22 @@
 
     <!-- Floating Contact Actions -->
     <div class="floating-contact">
-        <a href="tel:00447833814223" class="float-btn float-phone" aria-label="Call Us">
+        <a href="tel:00447833814223" class="float-btn float-phone" id="float-phone-btn" aria-label="Call Us">
             <i class="fa-solid fa-phone"></i>
             <span class="float-label">Call Us Now</span>
         </a>
         <a href="https://wa.me/447833814223?text=Hello%20Wizz%20Cars%2C%20I'd%20like%20to%20request%20a%20taxi%20booking."
-            target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp">
+            target="_blank" rel="noopener" class="float-btn float-whatsapp" id="float-whatsapp-btn"
+            aria-label="Chat on WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
             <span class="float-label">Let's Chat</span>
         </a>
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/site-contact-loader.js"></script>
     <script src="js/app.js"></script>
 </body>
 

@@ -38,6 +38,10 @@ function showSection(sectionKey) {
     if (sectionKey === 'contact') {
         loadContactSettings();
     }
+
+    if (sectionKey === 'settings') {
+        loadAnnouncementSettings();
+    }
 }
 
 navItems.forEach(btn => {
@@ -780,6 +784,137 @@ async function saveContactSettings() {
     statusEl.textContent = 'Saved ✓ (updates everywhere on the site)';
     statusEl.className = 'save-status success';
     setTimeout(() => { statusEl.textContent = ''; }, 3500);
+}
+
+// ---------- Settings: Announcement Popup ----------
+const announcementSettingsArea = document.getElementById('announcementSettingsArea');
+
+async function loadAnnouncementSettings() {
+    announcementSettingsArea.innerHTML = '<div class="state-msg">Loading...</div>';
+
+    const { data, error } = await supabaseClient
+        .from('site_settings')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+    if (error || !data) {
+        console.error('Error loading announcement settings:', error);
+        announcementSettingsArea.innerHTML = `<div class="state-msg">Could not load: ${escapeHtml(error ? error.message : 'no data')}</div>`;
+        return;
+    }
+
+    renderAnnouncementSettings(data);
+}
+
+function renderAnnouncementSettings(s) {
+    announcementSettingsArea.innerHTML = `
+    <div class="fleet-field">
+      <label>
+        <input type="checkbox" id="announceEnabledCheckbox" ${s.announcement_enabled ? 'checked' : ''}>
+        Show popup to visitors
+      </label>
+    </div>
+    <div class="fleet-field">
+      <label>Popup Title</label>
+      <input type="text" id="announceTitleInput" value="${escapeHtml(s.announcement_title)}">
+    </div>
+    <div class="fleet-field">
+      <label>Popup Text</label>
+      <textarea id="announceTextInput">${escapeHtml(s.announcement_text)}</textarea>
+    </div>
+    <div class="fleet-field">
+      <label>Button Text</label>
+      <input type="text" id="announceButtonInput" value="${escapeHtml(s.announcement_button_text)}">
+    </div>
+    <button class="save-price-btn" id="saveAnnouncementBtn">Save Changes</button>
+    <span class="save-status" id="saveAnnouncementStatus"></span>
+  `;
+
+    document.getElementById('saveAnnouncementBtn').addEventListener('click', saveAnnouncementSettings);
+}
+
+async function saveAnnouncementSettings() {
+    const statusEl = document.getElementById('saveAnnouncementStatus');
+    const btnEl = document.getElementById('saveAnnouncementBtn');
+
+    const announcement_enabled = document.getElementById('announceEnabledCheckbox').checked;
+    const announcement_title = document.getElementById('announceTitleInput').value.trim();
+    const announcement_text = document.getElementById('announceTextInput').value.trim();
+    const announcement_button_text = document.getElementById('announceButtonInput').value.trim();
+
+    if (!announcement_title || !announcement_text || !announcement_button_text) {
+        statusEl.textContent = 'All fields required';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Saving...';
+    statusEl.textContent = '';
+
+    const { error } = await supabaseClient
+        .from('site_settings')
+        .update({ announcement_enabled, announcement_title, announcement_text, announcement_button_text })
+        .eq('id', 1);
+
+    btnEl.disabled = false;
+    btnEl.textContent = 'Save Changes';
+
+    if (error) {
+        console.error('Error saving announcement settings:', error);
+        statusEl.textContent = 'Failed to save';
+        statusEl.className = 'save-status error';
+        return;
+    }
+
+    statusEl.textContent = 'Saved ✓';
+    statusEl.className = 'save-status success';
+    setTimeout(() => { statusEl.textContent = ''; }, 2500);
+}
+
+// ---------- Settings: Change Admin Password ----------
+const changePasswordBtn = document.getElementById('changePasswordBtn');
+if (changePasswordBtn) {
+    changePasswordBtn.addEventListener('click', async () => {
+        const statusEl = document.getElementById('changePasswordStatus');
+        const newPassword = document.getElementById('newPasswordInput').value;
+        const confirmPassword = document.getElementById('confirmPasswordInput').value;
+
+        if (!newPassword || newPassword.length < 6) {
+            statusEl.textContent = 'Password must be at least 6 characters';
+            statusEl.className = 'save-status error';
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            statusEl.textContent = 'Passwords do not match';
+            statusEl.className = 'save-status error';
+            return;
+        }
+
+        changePasswordBtn.disabled = true;
+        changePasswordBtn.textContent = 'Updating...';
+        statusEl.textContent = '';
+
+        const { error } = await supabaseClient.auth.updateUser({ password: newPassword });
+
+        changePasswordBtn.disabled = false;
+        changePasswordBtn.textContent = 'Update Password';
+
+        if (error) {
+            console.error('Error updating password:', error);
+            statusEl.textContent = 'Failed: ' + error.message;
+            statusEl.className = 'save-status error';
+            return;
+        }
+
+        document.getElementById('newPasswordInput').value = '';
+        document.getElementById('confirmPasswordInput').value = '';
+        statusEl.textContent = 'Password updated ✓';
+        statusEl.className = 'save-status success';
+        setTimeout(() => { statusEl.textContent = ''; }, 3500);
+    });
 }
 
 async function initDashboard() {

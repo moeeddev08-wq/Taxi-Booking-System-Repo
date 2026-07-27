@@ -169,14 +169,33 @@
                     </div>
                 </section>
 
-                <!-- PLACEHOLDER: Settings -->
+                <!-- SETTINGS SECTION (live/working) -->
                 <section class="panel" id="section-settings" hidden>
                     <div class="section-head">
                         <h1>Settings</h1>
                     </div>
+
                     <div class="card">
-                        <div class="state-msg">Coming soon — admin login management, announcement popup control, and
-                            other site-wide toggles will live here.</div>
+                        <h2 class="subsection-title">Announcement Popup</h2>
+                        <span class="count" style="display:block; margin-bottom:16px;">Controls the popup that appears
+                            on the homepage for new visitors.</span>
+                        <div id="announcementSettingsArea">
+                            <div class="state-msg">Loading...</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="subsection-title">Change Admin Password</h2>
+                        <div class="fleet-field">
+                            <label>New Password</label>
+                            <input type="password" id="newPasswordInput" placeholder="At least 6 characters">
+                        </div>
+                        <div class="fleet-field">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmPasswordInput" placeholder="Re-enter new password">
+                        </div>
+                        <button class="save-price-btn" id="changePasswordBtn">Update Password</button>
+                        <span class="save-status" id="changePasswordStatus"></span>
                     </div>
                 </section>
 

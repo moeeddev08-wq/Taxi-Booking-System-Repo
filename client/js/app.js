@@ -66,6 +66,10 @@ function initAnnouncePopup() {
     if (sessionStorage.getItem('announceDismissed') === 'true') return;
 
     setTimeout(() => {
+        // Respect the dashboard's on/off toggle (set by site-contact-loader.js).
+        // Defaults to showing the popup if the setting hasn't loaded for some reason.
+        if (window.announcementEnabled === false) return;
+
         popup.classList.add('show');
         backdrop.classList.add('show');
         document.body.style.overflow = 'hidden';

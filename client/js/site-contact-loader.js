@@ -58,6 +58,21 @@ async function loadSiteContactSettings() {
 
     const contactHoursText = document.getElementById('contact-hours-text');
     if (contactHoursText) contactHoursText.textContent = data.office_hours;
+
+    // Announcement popup content
+    const announcePopup = document.getElementById('announce-popup');
+    if (announcePopup) {
+        const titleEl = announcePopup.querySelector('h3');
+        const textEl = announcePopup.querySelector('p');
+        const btnEl = document.getElementById('announce-btn');
+
+        if (titleEl) titleEl.textContent = data.announcement_title;
+        if (textEl) textEl.textContent = data.announcement_text;
+        if (btnEl) btnEl.textContent = data.announcement_button_text;
+    }
+
+    // Whether the popup is allowed to show at all (checked by app.js before it displays)
+    window.announcementEnabled = data.announcement_enabled;
 }
 
 document.addEventListener('DOMContentLoaded', loadSiteContactSettings);

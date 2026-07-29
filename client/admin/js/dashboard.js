@@ -3,8 +3,11 @@ const bookingCount = document.getElementById('bookingCount');
 const userEmailEl = document.getElementById('userEmail');
 const logoutBtn = document.getElementById('logoutBtn');
 const refreshBtn = document.getElementById('refreshBtn');
+const exportCsvBtn = document.getElementById('exportCsvBtn');
 const sectionTitle = document.getElementById('sectionTitle');
 const navItems = document.querySelectorAll('.nav-item');
+
+let currentBookings = [];
 
 // ---------- Sidebar section switching ----------
 function showSection(sectionKey) {
@@ -128,9 +131,11 @@ async function loadBookings() {
         console.error('Error loading bookings:', error);
         bookingsArea.innerHTML = `<div class="state-msg">Could not load bookings: ${escapeHtml(error.message)}</div>`;
         bookingCount.textContent = '';
+        currentBookings = [];
         return;
     }
 
+    currentBookings = data || [];
     renderBookings(data);
 }
 
@@ -252,6 +257,55 @@ logoutBtn.addEventListener('click', async () => {
 });
 
 refreshBtn.addEventListener('click', loadBookings);
+
+// ---------- Export bookings to CSV ----------
+function csvEscape(value) {
+    if (value === null || value === undefined) return '';
+    const str = String(value);
+    if (/[",\n]/.test(str)) {
+        return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+}
+
+function exportBookingsToCsv() {
+    if (!currentBookings || currentBookings.length === 0) {
+        alert('No bookings to export.');
+        return;
+    }
+
+    const headers = ['Pickup Date/Time', 'Name', 'Phone', 'Pickup', 'Drop-off', 'Fare', 'Notes', 'Submitted'];
+
+    const rows = currentBookings.map(b => [
+        formatDateTime(b.date_time),
+        b.name,
+        b.phone,
+        b.pickup_location,
+        b.dropoff_location,
+        b.fare,
+        b.notes,
+        formatDateTime(b.created_at)
+    ]);
+
+    const csvContent = [headers, ...rows]
+        .map(row => row.map(csvEscape).join(','))
+        .join('\r\n');
+
+    // Prefix with a BOM so Excel opens special characters (like £) correctly
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const dateStamp = new Date().toISOString().split('T')[0];
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `wizz-cars-bookings-${dateStamp}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+exportCsvBtn.addEventListener('click', exportBookingsToCsv);
 
 // Redirect to login if the session ever ends (e.g. token expiry) while on this page
 supabaseClient.auth.onAuthStateChange((event) => {

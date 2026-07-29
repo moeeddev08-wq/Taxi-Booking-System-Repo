@@ -11,6 +11,15 @@ function hideError() {
     errorMsg.style.display = 'none';
 }
 
+// Safety net: if the browser restores this page from back-forward cache
+// (e.g. navigating Back to the login page after already logging in), force
+// a fresh reload so checkExistingSession() below runs again on a clean page.
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+
 // If already logged in, skip straight to dashboard
 (async function checkExistingSession() {
     const { data } = await supabaseClient.auth.getSession();

@@ -3,8 +3,11 @@ const bookingCount = document.getElementById('bookingCount');
 const userEmailEl = document.getElementById('userEmail');
 const logoutBtn = document.getElementById('logoutBtn');
 const refreshBtn = document.getElementById('refreshBtn');
+const exportCsvBtn = document.getElementById('exportCsvBtn');
 const sectionTitle = document.getElementById('sectionTitle');
 const navItems = document.querySelectorAll('.nav-item');
+
+let currentBookings = [];
 
 // ---------- Sidebar section switching ----------
 function showSection(sectionKey) {
@@ -148,9 +151,11 @@ async function loadBookings() {
         console.error('Error loading bookings:', error);
         bookingsArea.innerHTML = `<div class="state-msg">Could not load bookings: ${escapeHtml(error.message)}</div>`;
         bookingCount.textContent = '';
+        currentBookings = [];
         return;
     }
 
+    currentBookings = data;
     renderBookings(data);
 }
 
@@ -948,6 +953,54 @@ logoutBtn.addEventListener('click', async () => {
 });
 
 refreshBtn.addEventListener('click', loadBookings);
+
+if (exportCsvBtn) {
+    exportCsvBtn.addEventListener('click', () => {
+        if (!currentBookings || currentBookings.length === 0) {
+            alert('No bookings available to export.');
+            return;
+        }
+
+        const headers = ['ID', 'Created At', 'Pickup Date/Time', 'Customer Name', 'Phone Number', 'Pickup Location', 'Dropoff Location', 'Fare (£)', 'Status', 'Notes'];
+
+        const rows = currentBookings.map(b => [
+            b.id || '',
+            b.created_at || '',
+            b.date_time || '',
+            b.name || '',
+            b.phone || '',
+            b.pickup_location || '',
+            b.dropoff_location || '',
+            b.fare !== null && b.fare !== undefined ? b.fare : '',
+            b.status || '',
+            b.notes || ''
+        ]);
+
+        function formatCsvCell(val) {
+            if (val === null || val === undefined) return '';
+            let formatted = String(val);
+            if (formatted.includes('"') || formatted.includes(',') || formatted.includes('\n') || formatted.includes('\r')) {
+                formatted = `"${formatted.replace(/"/g, '""')}"`;
+            }
+            return formatted;
+        }
+
+        const csvContent = [
+            headers.map(formatCsvCell).join(','),
+            ...rows.map(row => row.map(formatCsvCell).join(','))
+        ].join('\r\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `wizz_cars_bookings_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    });
+}
 
 // Redirect to login if the session ever ends (e.g. token expiry) while on this page
 supabaseClient.auth.onAuthStateChange((event) => {

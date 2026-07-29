@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — Wizz Cars Godalming Admin</title>
     <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Cache-Control" content="no-store" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -30,20 +31,14 @@
                 <button class="nav-item" data-section="fleet">
                     <span class="nav-icon">🚗</span> Fleet
                 </button>
-                <button class="nav-item" data-section="services">
-                    <span class="nav-icon">🛠️</span> Services
-                </button>
                 <button class="nav-item" data-section="testimonials">
-                    <span class="nav-icon">⭐</span> Testimonials
+                    <span class="nav-icon">⭐</span> Reviews
                 </button>
                 <button class="nav-item" data-section="faqs">
                     <span class="nav-icon">❓</span> FAQs
                 </button>
                 <button class="nav-item" data-section="contact">
                     <span class="nav-icon">📞</span> Contact Details
-                </button>
-                <button class="nav-item" data-section="gallery">
-                    <span class="nav-icon">🖼️</span> Logo &amp; Gallery
                 </button>
                 <button class="nav-item" data-section="settings">
                     <span class="nav-icon">⚙️</span> Settings
@@ -69,7 +64,6 @@
                         <h1>Bookings</h1>
                         <div style="display:flex; align-items:center; gap:12px;">
                             <span class="count" id="bookingCount"></span>
-                            <button class="refresh-btn" id="exportCsvBtn">Export CSV</button>
                             <button class="refresh-btn" id="refreshBtn">Refresh</button>
                         </div>
                     </div>
@@ -80,7 +74,7 @@
                     </div>
                 </section>
 
-                <!-- PLACEHOLDER SECTIONS (Phase 2+) -->
+                <!-- PRICES SECTION (live/working) -->
                 <section class="panel" id="section-prices" hidden>
                     <div class="section-head">
                         <h1>Prices</h1>
@@ -93,66 +87,116 @@
                     </div>
                 </section>
 
+                <!-- FLEET SECTION (live/working) -->
                 <section class="panel" id="section-fleet" hidden>
                     <div class="section-head">
                         <h1>Fleet</h1>
+                        <span class="count">Edit vehicle details and click Save on that card.</span>
                     </div>
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 3 — manage your vehicles here.</div>
+                        <div id="fleetArea">
+                            <div class="state-msg">Loading fleet...</div>
+                        </div>
                     </div>
                 </section>
 
-                <section class="panel" id="section-services" hidden>
-                    <div class="section-head">
-                        <h1>Services</h1>
-                    </div>
-                    <div class="card">
-                        <div class="state-msg">Coming in Phase 4 — manage your service list here.</div>
-                    </div>
-                </section>
-
+                <!-- REVIEWS SECTION (live/working) -->
                 <section class="panel" id="section-testimonials" hidden>
                     <div class="section-head">
-                        <h1>Testimonials</h1>
+                        <h1>Reviews</h1>
+                        <span class="count">Approve or reject reviews submitted from the website.</span>
                     </div>
+
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 5 — manage customer reviews here.</div>
+                        <h2 class="subsection-title">Pending Approval</h2>
+                        <div id="pendingReviewsArea">
+                            <div class="state-msg">Loading pending reviews...</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="subsection-title">Approved (Live on Website)</h2>
+                        <div id="approvedReviewsArea">
+                            <div class="state-msg">Loading approved reviews...</div>
+                        </div>
                     </div>
                 </section>
 
+                <!-- FAQS SECTION (live/working) -->
                 <section class="panel" id="section-faqs" hidden>
                     <div class="section-head">
                         <h1>FAQs</h1>
+                        <span class="count">Edit, add, or remove questions and answers.</span>
                     </div>
+
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 6 — manage FAQs here.</div>
+                        <h2 class="subsection-title">Add a New FAQ</h2>
+                        <div class="faq-admin-add-form">
+                            <div class="fleet-field">
+                                <label>Category</label>
+                                <input type="text" id="newFaqCategory" placeholder="e.g. Booking &amp; Pricing">
+                            </div>
+                            <div class="fleet-field">
+                                <label>Question</label>
+                                <input type="text" id="newFaqQuestion" placeholder="e.g. How do I book a journey?">
+                            </div>
+                            <div class="fleet-field">
+                                <label>Answer</label>
+                                <textarea id="newFaqAnswer" placeholder="Write the answer here..."></textarea>
+                            </div>
+                            <button class="save-price-btn" id="addFaqBtn">Add FAQ</button>
+                            <span class="save-status" id="addFaqStatus"></span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="subsection-title">Existing FAQs</h2>
+                        <div id="faqsArea">
+                            <div class="state-msg">Loading FAQs...</div>
+                        </div>
                     </div>
                 </section>
 
+                <!-- CONTACT DETAILS SECTION (live/working) -->
                 <section class="panel" id="section-contact" hidden>
                     <div class="section-head">
                         <h1>Contact Details</h1>
+                        <span class="count">Updates here apply across every page of the website.</span>
                     </div>
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 7 — edit phone, email, address & WhatsApp here.</div>
+                        <div id="contactSettingsArea">
+                            <div class="state-msg">Loading contact settings...</div>
+                        </div>
                     </div>
                 </section>
 
-                <section class="panel" id="section-gallery" hidden>
-                    <div class="section-head">
-                        <h1>Logo &amp; Gallery</h1>
-                    </div>
-                    <div class="card">
-                        <div class="state-msg">Coming in Phase 8 — upload logo & gallery images here.</div>
-                    </div>
-                </section>
-
+                <!-- SETTINGS SECTION (live/working) -->
                 <section class="panel" id="section-settings" hidden>
                     <div class="section-head">
                         <h1>Settings</h1>
                     </div>
+
                     <div class="card">
-                        <div class="state-msg">Coming in Phase 9 — final settings & polish.</div>
+                        <h2 class="subsection-title">Announcement Popup</h2>
+                        <span class="count" style="display:block; margin-bottom:16px;">Controls the popup that appears
+                            on the homepage for new visitors.</span>
+                        <div id="announcementSettingsArea">
+                            <div class="state-msg">Loading...</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="subsection-title">Change Admin Password</h2>
+                        <div class="fleet-field">
+                            <label>New Password</label>
+                            <input type="password" id="newPasswordInput" placeholder="At least 6 characters">
+                        </div>
+                        <div class="fleet-field">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmPasswordInput" placeholder="Re-enter new password">
+                        </div>
+                        <button class="save-price-btn" id="changePasswordBtn">Update Password</button>
+                        <span class="save-status" id="changePasswordStatus"></span>
                     </div>
                 </section>
 

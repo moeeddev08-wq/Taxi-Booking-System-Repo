@@ -1,3 +1,11 @@
 {
-    "trailingSlash": true
+    "trailingSlash": true,
+    "redirects": [
+        {
+            "source": "/(.*)",
+            "has": [{ "type": "host", "value": "wizcarsgodalming.co.uk" }],
+            "destination": "https://www.wizcarsgodalming.co.uk/$1",
+            "permanent": true
+        }
+    ]
 }

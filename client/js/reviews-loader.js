@@ -30,9 +30,10 @@ function timeAgo(dateString) {
     return `${years} year${years > 1 ? 's' : ''} ago`;
 }
 
+// Returns the loaded rows so the caller can also use them for schema markup
 async function loadGoogleReviews() {
     const container = document.getElementById('google-reviews-list');
-    if (!container) return;
+    if (!container) return [];
 
     const { data, error } = await supabaseClient
         .from('google_reviews')
@@ -41,7 +42,7 @@ async function loadGoogleReviews() {
 
     if (error || !data || data.length === 0) {
         container.innerHTML = '<div class="state-msg">No Google reviews synced yet. Check back soon!</div>';
-        return;
+        return [];
     }
 
     container.innerHTML = data.map(r => `
@@ -54,11 +55,19 @@ async function loadGoogleReviews() {
             <p class="review-text">${escapeHtmlPublic(r.review_text)}</p>
         </div>
     `).join('');
+
+    return data.map(r => ({
+        author: r.author_name,
+        rating: r.rating,
+        text: r.review_text,
+        date: r.review_time
+    }));
 }
 
+// Returns the loaded rows so the caller can also use them for schema markup
 async function loadSiteReviews() {
     const container = document.getElementById('site-reviews-list');
-    if (!container) return;
+    if (!container) return [];
 
     const { data, error } = await supabaseClient
         .from('site_reviews')
@@ -68,7 +77,7 @@ async function loadSiteReviews() {
 
     if (error || !data || data.length === 0) {
         container.innerHTML = '<div class="state-msg">No reviews yet — be the first to share your experience!</div>';
-        return;
+        return [];
     }
 
     container.innerHTML = data.map(r => `
@@ -81,6 +90,70 @@ async function loadSiteReviews() {
             <p class="review-text">${escapeHtmlPublic(r.message)}</p>
         </div>
     `).join('');
+
+    return data.map(r => ({
+        author: r.name,
+        rating: r.rating,
+        text: r.message,
+        date: r.created_at
+    }));
+}
+
+// Builds and injects schema.org JSON-LD from real, currently-live review data only.
+// Google reads this to (maybe) show a star-rating rich snippet in search results.
+function injectReviewSchema(allReviews) {
+    // Remove any previous schema block (e.g. if this runs more than once)
+    const existing = document.getElementById('review-schema-ld');
+    if (existing) existing.remove();
+
+    if (!allReviews || allReviews.length === 0) return;
+
+    const ratings = allReviews
+        .map(r => Number(r.rating))
+        .filter(r => !isNaN(r) && r >= 1 && r <= 5);
+
+    if (ratings.length === 0) return;
+
+    const average = ratings.reduce((sum, r) => sum + r, 0) / ratings.length;
+
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Wizz Cars Godalming",
+        "image": "https://wizcarsgodalming.co.uk/assets/hero-car.jpg",
+        "telephone": "+447833814223",
+        "url": "https://wizcarsgodalming.co.uk/",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Godalming",
+            "addressRegion": "Surrey",
+            "addressCountry": "GB"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": average.toFixed(1),
+            "reviewCount": ratings.length
+        },
+        "review": allReviews.slice(0, 20).map(r => ({
+            "@type": "Review",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": r.rating
+            },
+            "author": {
+                "@type": "Person",
+                "name": r.author || "Customer"
+            },
+            "reviewBody": r.text || "",
+            "datePublished": r.date ? new Date(r.date).toISOString().split('T')[0] : undefined
+        }))
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'review-schema-ld';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
 }
 
 function initStarRating() {
@@ -163,9 +236,14 @@ function initReviewForm() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadGoogleReviews();
-    loadSiteReviews();
+document.addEventListener('DOMContentLoaded', async () => {
+    const [googleReviews, siteReviews] = await Promise.all([
+        loadGoogleReviews(),
+        loadSiteReviews()
+    ]);
+
+    injectReviewSchema([...googleReviews, ...siteReviews]);
+
     initStarRating();
     initReviewForm();
 });
